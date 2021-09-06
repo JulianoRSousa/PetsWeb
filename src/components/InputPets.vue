@@ -1,49 +1,35 @@
 <template>
   <div>
-    <h2>{{title}}</h2>
-    <input id="InputPets" type="text" />
+    <h2>{{ title }}</h2>
+    <input id="InputPets" :type="type" :placeholder="placeholder" />
   </div>
 </template>
 
 <script>
 export default {
   props: {
-    title: String,
+    placeholder: String,
     email: String,
     pass: String,
-    secureText: Boolean,
+    type: String,
   },
   data() {
-    return {
-      nome: "a",
-      numero: "",
-      idade: 0,
-      descricao: "Olá, Brasil",
-    };
+    return {};
   },
 };
 </script>
 
 <style scoped>
-#Cliente {
-  background-color: #aaf;
-  height: auto;
-  width: auto;
-  padding: 2%;
-}
 #InputPets {
-  background-color: #eee;
+  background-color: #ffffff;
+  border-radius: 14px;
   color: #2c2c2c;
-  font-size: 20px;
-  font-family: Delius;
-  width: 10em;
-  height: fit-content;
-  border-radius: 10px;
+  font-size: 30;
   border-width: 0;
-  margin: 0px;
-  padding: 1%;
-}
-.h2 {
-  color: red;
+  margin: 0.5px;
+  padding: 0.5rem;
+  height: 1.5rem;
+  width: 20rem;
+  box-shadow: 0px 1.5px 1.56px rgba(0, 0, 0, 0.25);
 }
 </style>
