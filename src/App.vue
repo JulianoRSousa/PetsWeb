@@ -1,28 +1,45 @@
+<script>
+import Cliente from "./components/Cliente.vue";
+import InputPets from './components/InputPets.vue';
+export default {
+  name: "App",
+  components: {
+    Cliente,
+    InputPets,
+  },
+  data() {
+    return {
+      cliente:{
+        nome:"Juliano",
+        idade: "18"
+      },
+      user:{
+        email:"",
+        pass: ""
+      }
+    };
+  },
+};
+</script>
+
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <input-pets title="Email" v-model="user.email" />
+    <input-pets title="Senha" v-model="user.pass" />
+    <Cliente :cliente="cliente" />
+    <Cliente :cliente="cliente" />
+    <Cliente :cliente="cliente" />
   </div>
 </template>
 
-<script>
-import HelloWorld from './components/HelloWorld.vue'
-
-export default {
-  name: 'App',
-  components: {
-    HelloWorld 
-  }
-}
-</script>
-
 <style>
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  background-color: #ff8637;
+  min-height: 100vh;
+  width: 100%;
+  padding: 0;
+  margin: 0;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
 }
 </style>
