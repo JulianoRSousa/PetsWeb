@@ -28,11 +28,11 @@ export default {
 <template>
   <div id="app">
     <div id="teste">
-      <h1 id="title">pets</h1>
-      <input-pets placeholder="email" type="text" v-model="user.email" />
+      <h1 class="title">pets</h1>
+      <input-pets placeholder="email" type="text" title="aaa" v-model="user.email" />
       <input-pets placeholder="senha" type="password" v-model="user.pass" />
       <a href="" id="passrec">esqueceu sua senha?</a>
-      
+
       <sign-button title="entrar" />
       <sign-button title="criar conta" />
     </div>
@@ -49,7 +49,7 @@ export default {
   margin: -10px;
   color: #eef1ff;
 }
-#title {
+.title {
   font-size: 3rem;
   margin-bottom: 8vh;
 }

@@ -1,8 +1,9 @@
 <template>
-  <div>
-    <h2>{{ title }}</h2>
-    <input id="InputPets" :type="type" :placeholder="placeholder" />
-  </div>
+  <form>
+    <input v-if="type != 'password'" class="InputPets" autocomplete="none" :type="type" :placeholder="placeholder" />
+    <input v-else class="InputPets" :type="type" autocomplete="new-pass"
+     :placeholder="placeholder"  />
+  </form>
 </template>
 
 <script>
@@ -20,7 +21,7 @@ export default {
 </script>
 
 <style scoped>
-#InputPets {
+.InputPets {
   background-color: #ffffff;
   border-radius: 14px;
   color: #2c2c2c;
@@ -30,6 +31,7 @@ export default {
   padding: 0.5rem;
   height: 1.5rem;
   width: 20rem;
+  margin-top: 2rem;
   box-shadow: 0px 1.5px 1.56px rgba(0, 0, 0, 0.25);
 }
 </style>
