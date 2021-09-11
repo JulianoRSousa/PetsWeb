@@ -1,8 +1,19 @@
 <template>
   <form>
-    <input v-if="type != 'password'" class="InputPets" autocomplete="none" :type="type" :placeholder="placeholder" />
-    <input v-else class="InputPets" :type="type" autocomplete="new-pass"
-     :placeholder="placeholder"  />
+    <input
+      v-if="type != 'password'"
+      class="InputPets"
+      autocomplete="none"
+      :type="type"
+      :placeholder="placeholder"
+    />
+    <input
+      v-else
+      class="InputPets"
+      :type="type"
+      autocomplete="new-pass"
+      :placeholder="placeholder"
+    />
   </form>
 </template>
 
@@ -32,6 +43,7 @@ export default {
   height: 1.5rem;
   width: 20rem;
   margin-top: 2rem;
-  box-shadow: 0px 1.5px 1.56px rgba(0, 0, 0, 0.25);
+  outline: none;
+  caret-color: #ff8637;
 }
 </style>
