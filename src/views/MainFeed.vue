@@ -7,7 +7,7 @@ export default {
 </script>
 
 <template>
-  <div class="main">
+  <div>
     <div class="separator">
       <post-item />
     </div>
@@ -15,12 +15,6 @@ export default {
 </template>
 
 <style>
-.main {
-  position:absolute;
-  height: 9000px;
-  width: 9000px;
-  background-color: #ff8;
-}
 .separator {
   padding-left: 2rem;
   padding-right: 2rem;

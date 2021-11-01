@@ -4,6 +4,7 @@ import Router from "vue-router";
 import Feed from "../views/MainFeed.vue";
 import CreateAccount from '../views/CreateAccount.vue'
 import Home from "../views/Home.vue";
+import Login from "../views/Login.vue";
 
 Vue.use(Router);
 
@@ -22,6 +23,11 @@ const routes = [
     name: "feed",
     path: "/feed",
     component: Feed,
+  }, 
+   {
+    name: "login",
+    path: "/login",
+    component: Login,
   },
 ];
 
