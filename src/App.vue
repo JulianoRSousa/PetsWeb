@@ -36,10 +36,38 @@ main {
   -webkit-overflow-scrolling: touch;
   flex: auto;
 }
+.headerApp {
+  display: flex;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  background-image: linear-gradient(180deg, #ff8637, #fdb05d);
+}
 .appName {
-  font-size: 1rem;
-  padding: 1rem;
+  flex: 1;
+  text-align: center;
+  font-size: 1.5rem;
+  color: white;
   text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  text-decoration:none;
+  text-decoration: none;
+}
+.pageTitle {
+  flex: 1;
+  text-align: center;
+  font-size: 1.5rem;
+  color: white;
+  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+.dropdownMenu {
+  flex: 1;
+  text-align: end;
+  font-size: 1.5rem;
+  color: white;
+  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+.formTitle {
+  font-size: 1.5rem;
+  color: white;
+  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  margin-bottom: 2rem;
 }
 </style>

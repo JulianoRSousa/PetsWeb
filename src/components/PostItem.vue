@@ -49,7 +49,7 @@ export default {
   padding-top: 1rem;
   padding-left: 1rem;
   margin-top: 10rem;
-  box-shadow: 0rem 0.3rem 0.3rem rgba(0, 0, 0, 0.25);
+  box-shadow: 0.1rem 0.3rem 0.3rem 0.3rem rgba(0, 0, 0.25, 0.25);
   border-radius: 3rem 0rem;
 }
 .userInfoContainer {

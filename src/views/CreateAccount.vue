@@ -1,14 +1,12 @@
 <template>
   <body>
-    <header>
-      <a href="http://localhost:8080/?#/" class="appName"
-        >Pets</a
-      >
+    <header class="headerApp">
+      <a class="appName" href="http://localhost:8080/?#/">Pets</a>
+      <div class="pageMenu">Menu</div>
     </header>
     <main class="pageCreateAcc">
       <form class="createAcc">
         <span class="formTitle">Criar Conta</span>
-
         <input-pets placeholder="Nome Completo" example="Pedro Silva" />
         <input-pets
           placeholder="Data de nascimento"
@@ -65,11 +63,13 @@ export default {
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
-  width: 30rem;
-  height: 38rem;
+  width: fit-content;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  height: 34rem;
   border-radius: 3rem;
   border-width: 1px;
-  background-color: #fdb05d;
+  background-color: #ffca85;
 }
 .termsInfo {
   color: #505050;

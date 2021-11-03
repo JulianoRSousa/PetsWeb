@@ -1,9 +1,7 @@
 <template>
   <body>
-    <header>
-      <a href="" class="appName"
-        >Pets</a
-      >
+    <header class="headerApp">
+      <a class="appName" href="http://localhost:8080/?#/">Pets</a>
     </header>
     <main class="pageLogin">
       <form class="login">
@@ -20,11 +18,10 @@
           minlength="8"
         />
         <button-pets title="Entrar" />
-      <div class="secondaryContainer">
-        <a href="?#/createaccount" class="createAccount">Criar uma conta</a>
-        <a class="secondaryOption">Esqueci minha senha</a>
-
-      </div>
+        <div class="secondaryContainer">
+          <a href="?#/createaccount" class="nodec">Criar uma conta</a>
+          <a href="?#/createaccount" class="nodec">Esqueci minha senha</a>
+        </div>
       </form>
     </main>
     <footer></footer>
@@ -52,23 +49,25 @@ export default {
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
-  width: 30rem;
+  width: fit-content;
+  padding-left: 1rem;
+  padding-right: 1rem;
   height: 30rem;
   border-radius: 3rem;
   border-width: 1px;
-  background-color: #fdb05d;
+  background-color: #ffca85;
 }
-.formTitle {
-  font-size: 1.5rem;
-  color: white;
-  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  margin-bottom: 2rem;
-}
-.secondaryContainer{
+
+.secondaryContainer {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
   align-content: space-around;
-  width: 100%
+  text-decoration: none;
+  width: 100%;
+}
+.nodec {
+  text-decoration: none;
+  color: #505050;
 }
 </style>
