@@ -1,21 +1,24 @@
 <template>
   <body>
-    <header class="headerApp">
-      <a class="appName" href="http://localhost:8080/?#/">Pets</a>
+    <header>
+      <header-pets />
     </header>
+
     <main class="pageLogin">
-      <form class="login">
+      <form class="login" @submit="sendLogin">
         <span class="formTitle">Login</span>
         <input-pets
           placeholder="Email"
           type="email"
           example="pedro@gmail.com"
+          v-model="email"
         />
         <input-pets
           placeholder="Senha"
           type="password"
           example="••••••••"
-          minlength="8"
+          :minlength="8"
+          v-model="pass"
         />
         <button-pets title="Entrar" />
         <div class="secondaryContainer">
@@ -31,9 +34,82 @@
 <script>
 import InputPets from "../components/InputPets.vue";
 import ButtonPets from "../components/ButtonPets.vue";
+import HeaderPets from "../components/headerPets.vue";
+import api from "../services/api";
 export default {
-  components: { InputPets, ButtonPets },
+  components: { InputPets, ButtonPets, HeaderPets },
   name: "CreateAccount",
+
+  created: function() {
+    this.sendLogin();
+  },
+  mounted() {
+    if (localStorage.getItem("user")) {
+      try {
+        this.user = JSON.parse(localStorage.getItem("user"));
+      } catch (error) {
+        localStorage.removeItem("user");
+      }
+    }
+    if (this.user._id != null) {
+      this.$router.push('/feed')
+      console.log("diferente");
+    }
+  },
+
+  data() {
+    return {
+      user: {
+        _id: null,
+        email: null,
+        firstName: null,
+        birthDate: null,
+        picture_url: null,
+      },
+      email: null,
+      pass: null,
+    };
+  },
+  methods: {
+    addUser() {
+      if (!this.newUser) return;
+      this.user.push(this.newUser);
+      this.newUser = "";
+      this.saveCats();
+    },
+    saveUser() {
+      const parsed = JSON.stringify(this.user);
+      localStorage.setItem("user", parsed);
+    },
+
+    sendLogin: function() {
+      try {
+        api
+          .post(
+            "/createauth",
+            {},
+            {
+              headers: {
+                email: this.email,
+                pass: this.pass,
+              },
+            }
+          )
+          .then((res) => {
+            if (res.status == 201) {
+              this.user._id = res.data.user._id;
+              this.user.email = res.data.user.email;
+              this.user.firstName = res.data.user.firstName;
+              this.user.birthDate = res.data.user.birthDate;
+              this.user.picture_url = res.data.user.picture_url;
+              this.saveUser();
+            }
+          });
+      } catch (error) {
+        console.log("Erro: ", error);
+      }
+    },
+  },
 };
 </script>
 

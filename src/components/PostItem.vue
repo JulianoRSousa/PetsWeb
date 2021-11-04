@@ -53,7 +53,6 @@ export default {
   border-radius: 3rem 0rem;
 }
 .userInfoContainer {
-  background-color: red;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;

@@ -12,6 +12,7 @@ export default {
   props: {
     title: String,
   },
+  methods: {},
 };
 </script>
 
@@ -35,5 +36,6 @@ export default {
   text-align: center;
   background: linear-gradient(180deg, #fc6464 0%, #f86d56 77.6%, #ee653a 100%);
   border-radius: 25px;
+  cursor: pointer;
 }
 </style>

@@ -8,6 +8,8 @@
         :autocomplete="autocomplete || 'none'"
         :placeholder="example ? 'ex:  ' + example : ''"
         :type="type || 'text'"
+        :value="value"
+        @input="$emit('input', $event.target.value)"
       />
     </div>
   </div>
@@ -16,6 +18,7 @@
 <script>
 export default {
   props: {
+    value: String,
     example: String,
     placeholder: String,
     type: String,

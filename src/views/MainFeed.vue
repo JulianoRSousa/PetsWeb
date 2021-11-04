@@ -1,13 +1,14 @@
 <template>
   <body>
-    <header class="headerApp">
-      <a class="appName" href="http://localhost:8080/?#/">Pets</a>
-      <span class="pageTitle">Ultimas Postagens</span>
-      <div class="pageMenu">oi</div>
+    <header>
+      <header-pets title="Feed" />
     </header>
     <main class="pageFeed">
       <div class="feedList">
         <div>
+          <div>
+            <h2>Olá {{ this.user.firstName }}</h2>
+          </div>
           <post-item />
         </div>
       </div>
@@ -18,9 +19,23 @@
 
 <script>
 import PostItem from "../components/PostItem.vue";
+import HeaderPets from "../components/headerPets.vue";
 export default {
-  components: { PostItem },
+  components: { PostItem, HeaderPets },
   name: "CreateAccount",
+  mounted() {
+    if (localStorage.getItem("user")) {
+      try {
+        this.user = JSON.parse(localStorage.getItem("user"));
+      } catch (error) {
+        localStorage.removeItem("user");
+      }
+    }
+    if (this.user._id != null) {
+      this.$router.push("/feed");
+      console.log("diferente");
+    }
+  },
 };
 </script>
 

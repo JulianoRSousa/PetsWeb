@@ -1,37 +1,40 @@
 <template>
   <body>
-    <header class="headerApp">
-      <a class="appName" href="http://localhost:8080/?#/">Pets</a>
-      <div class="pageMenu">Menu</div>
+    <header>
+      <header-pets title=" " />
     </header>
     <main class="pageCreateAcc">
-      <form class="createAcc">
+      <form class="createAcc" @submit="sendCreateAcc">
         <span class="formTitle">Criar Conta</span>
         <input-pets placeholder="Nome Completo" example="Pedro Silva" />
         <input-pets
           placeholder="Data de nascimento"
           type="date"
           example="01/01/1999"
+          v-model="birthDate"
         />
         <input-pets
           placeholder="Email"
           type="email"
           example="pedro@gmail.com"
+          v-model="email"
         />
         <input-pets
           placeholder="Senha"
           type="password"
           example="••••••••"
-          minlength="8"
+          :minlength="8"
+          v-model="pass"
         />
         <input-pets
           placeholder="Repetir senha"
           type="password"
           example="••••••••"
-          minlength="8"
+          :minlength="8"
+          v-model="repeatPass"
         />
         <p>
-          <input type="checkbox" />
+          <input type="checkbox" v-model="terms" />
           <span class="termsInfo">li e aceito os termos propostos neste </span>
           <a href="https://github.com/JulianoRSousa/PetsWeb/">link</a>
         </p>
@@ -45,9 +48,39 @@
 <script>
 import InputPets from "../components/InputPets.vue";
 import ButtonPets from "../components/ButtonPets.vue";
+import HeaderPets from "../components/headerPets.vue";
+import Api from "../services/api";
 export default {
-  components: { InputPets, ButtonPets },
+  components: { InputPets, ButtonPets, HeaderPets },
   name: "CreateAccount",
+  methods: {
+    sendCreateAcc: function() {
+      Api.post(
+        "/createlogin",
+        {},
+        {
+          headers: {
+            fullname: this.fullName,
+            birthdate: this.birthDate,
+            email: this.email,
+            pass: this.pass,
+          },
+        }
+      ).then((res) => {
+        console.log(res.data);
+      });
+    },
+  },
+  data() {
+    return {
+      fullName: null,
+      email: null,
+      pass: null,
+      repeatPass: null,
+      birthDate: null,
+      terms: false,
+    };
+  },
 };
 </script>
 
