@@ -6,9 +6,7 @@
     <main class="pageFeed">
       <div class="feedList">
         <div>
-          <div>
-            <h2>Olá {{ this.user.firstName }}</h2>
-          </div>
+          <h2>Olá, {{ this.user.username }}</h2>
           <post-item />
         </div>
       </div>
@@ -21,9 +19,20 @@
 import PostItem from "../components/PostItem.vue";
 import HeaderPets from "../components/headerPets.vue";
 export default {
-  components: { PostItem, HeaderPets },
+  components: {
+    PostItem,
+    HeaderPets,
+  },
   name: "CreateAccount",
+  data() {
+    return {
+      user: {
+        username: null,
+      },
+    };
+  },
   mounted() {
+    "";
     if (localStorage.getItem("user")) {
       try {
         this.user = JSON.parse(localStorage.getItem("user"));
@@ -31,7 +40,7 @@ export default {
         localStorage.removeItem("user");
       }
     }
-    if (this.user._id != null) {
+    if (this.user._id) {
       this.$router.push("/feed");
       console.log("diferente");
     }

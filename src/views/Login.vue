@@ -22,8 +22,12 @@
         />
         <button-pets title="Entrar" />
         <div class="secondaryContainer">
-          <a href="?#/createaccount" class="nodec">Criar uma conta</a>
-          <a href="?#/createaccount" class="nodec">Esqueci minha senha</a>
+          <router-link to="/createacc">
+            <span class="nodec">Criar uma conta</span>
+          </router-link>
+          <router-link to="/login">
+            <span class="nodec">Esqueci minha senha</span>
+          </router-link>
         </div>
       </form>
     </main>
@@ -40,20 +44,14 @@ export default {
   components: { InputPets, ButtonPets, HeaderPets },
   name: "CreateAccount",
 
-  created: function() {
-    this.sendLogin();
-  },
   mounted() {
+    console.log("user: ", localStorage.getItem("user"));
     if (localStorage.getItem("user")) {
       try {
         this.user = JSON.parse(localStorage.getItem("user"));
       } catch (error) {
         localStorage.removeItem("user");
       }
-    }
-    if (this.user._id != null) {
-      this.$router.push('/feed')
-      console.log("diferente");
     }
   },
 
@@ -62,7 +60,7 @@ export default {
       user: {
         _id: null,
         email: null,
-        firstName: null,
+        username: null,
         birthDate: null,
         picture_url: null,
       },
@@ -75,7 +73,7 @@ export default {
       if (!this.newUser) return;
       this.user.push(this.newUser);
       this.newUser = "";
-      this.saveCats();
+      this.saveUser();
     },
     saveUser() {
       const parsed = JSON.stringify(this.user);
@@ -96,10 +94,10 @@ export default {
             }
           )
           .then((res) => {
-            if (res.status == 201) {
+            if (res.status === 201) {
               this.user._id = res.data.user._id;
               this.user.email = res.data.user.email;
-              this.user.firstName = res.data.user.firstName;
+              this.user.username = res.data.user.username;
               this.user.birthDate = res.data.user.birthDate;
               this.user.picture_url = res.data.user.picture_url;
               this.saveUser();

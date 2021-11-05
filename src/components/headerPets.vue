@@ -13,8 +13,8 @@
             <router-link to="/createaccount">
               <span class="menuOption">Criar Conta</span>
             </router-link>
-            <router-link to="/" @click="logOut">
-              <span class="menuOption">Deslogar</span>
+            <router-link to="/">
+              <span @click="logOut" class="menuOption">Deslogar</span>
             </router-link>
           </div>
         </div>
@@ -28,11 +28,17 @@ export default {
   name: "HeaderPets",
   data() {
     return {
+      usuario: {},
+      nouser: {},
       showMenu: false,
     };
   },
+  mounted() {
+    this.usuario = JSON.parse(localStorage.getItem("user"));
+  },
   methods: {
     logOut: function() {
+      localStorage.removeItem("user");
       localStorage.clear();
     },
     toggleShow: function() {
