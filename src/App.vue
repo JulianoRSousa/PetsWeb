@@ -6,7 +6,8 @@
 
 <script>
 export default {
- 
+  mounted(){
+  }
 };
 </script>
 
@@ -25,7 +26,6 @@ body {
   flex-direction: column;
   font-family: "Satisfy";
 }
-
 
 main {
   overflow-y: auto;

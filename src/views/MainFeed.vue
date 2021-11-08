@@ -1,23 +1,22 @@
 <template>
-  <body>
+   <body>
     <header>
       <header-pets title="Feed" />
     </header>
     <main class="pageFeed">
       <div class="feedList">
-        <div>
-          <h2>Olá, {{ this.user.username }}</h2>
-          <post-item />
-        </div>
+        <h2>Exemplos de feed ({{this.user}})</h2>
+        <post-item />
       </div>
     </main>
-    <footer></footer>
   </body>
 </template>
 
 <script>
 import PostItem from "../components/PostItem.vue";
 import HeaderPets from "../components/headerPets.vue";
+import PetsLocalStorage from "../controller/PetsLocalStorage";
+
 export default {
   components: {
     PostItem,
@@ -26,24 +25,9 @@ export default {
   name: "CreateAccount",
   data() {
     return {
-      user: {
-        username: null,
-      },
+      token: PetsLocalStorage.getItem("token"),
+      user: PetsLocalStorage.getItem("user"),
     };
-  },
-  mounted() {
-    "";
-    if (localStorage.getItem("user")) {
-      try {
-        this.user = JSON.parse(localStorage.getItem("user"));
-      } catch (error) {
-        localStorage.removeItem("user");
-      }
-    }
-    if (this.user._id) {
-      this.$router.push("/feed");
-      console.log("diferente");
-    }
   },
 };
 </script>
@@ -60,6 +44,6 @@ export default {
   width: fit-content;
   padding-left: 1rem;
   padding-right: 1rem;
-  background-color: #fdb05d;
+  background-color: #ffb464;
 }
 </style>

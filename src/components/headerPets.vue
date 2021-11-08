@@ -7,14 +7,22 @@
         <button @click="toggleShow" class="dropbtn">Menu</button>
         <div v-if="showMenu" class="dropdownContent">
           <div class="menuItem">
-            <router-link to="/login">
+            <router-link
+              v-show="!logged"
+              class="menuOptionContainer"
+              to="/login"
+            >
               <span class="menuOption">Login</span>
             </router-link>
-            <router-link to="/createaccount">
-              <span class="menuOption">Criar Conta</span>
+            <router-link
+              v-show="!logged"
+              class="menuOptionContainer"
+              to="/createaccount"
+            >
+              <span>Criar Conta</span>
             </router-link>
-            <router-link to="/">
-              <span @click="logOut" class="menuOption">Deslogar</span>
+            <router-link v-show="logged" class="menuOptionContainer" to="/">
+              <span @click="logOut">Deslogar</span>
             </router-link>
           </div>
         </div>
@@ -24,22 +32,23 @@
 </template>
 
 <script>
+import PetsLocalStorage from "../controller/PetsLocalStorage";
 export default {
   name: "HeaderPets",
+  mounted() {
+    if (PetsLocalStorage.getItem("token")) {
+      this.logged = true;
+    }
+  },
   data() {
     return {
-      usuario: {},
-      nouser: {},
+      logged: false,
       showMenu: false,
     };
   },
-  mounted() {
-    this.usuario = JSON.parse(localStorage.getItem("user"));
-  },
   methods: {
     logOut: function() {
-      localStorage.removeItem("user");
-      localStorage.clear();
+      PetsLocalStorage.clear();
     },
     toggleShow: function() {
       this.showMenu = !this.showMenu;
@@ -90,9 +99,9 @@ export default {
 }
 .menuItem {
   display: flex;
-  height: 13rem;
   width: fit-content;
-  padding: 1rem;
+  padding-bottom: 2rem;
+  padding-top: 2rem;
   flex-direction: column;
   border-radius: 3rem 0rem 3rem 3rem;
   justify-content: space-around;
@@ -100,9 +109,9 @@ export default {
   background-color: #ff8637;
   position: absolute;
 }
-.menuOption {
-  text-decoration: none;
+.menuOptionContainer {
   color: white;
+  margin: 0.6rem;
 }
 .dropbtn {
   background-color: transparent;
@@ -114,14 +123,5 @@ export default {
   font-family: "Satisfy";
   cursor: pointer;
   border: none;
-}
-.dropdown-content {
-  display: none;
-  position: absolute;
-  right: 0;
-  background-color: #f9f9f9;
-  min-width: 10rem;
-  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-  z-index: 1;
 }
 </style>
