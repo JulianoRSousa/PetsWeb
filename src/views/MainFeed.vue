@@ -44,6 +44,6 @@ export default {
   width: fit-content;
   padding-left: 1rem;
   padding-right: 1rem;
-  background-color: #ffb464;
+  background-color: #F9A862;
 }
 </style>

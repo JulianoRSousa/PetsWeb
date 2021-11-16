@@ -1,7 +1,7 @@
 <template>
   <body>
     <header>
-      <header-pets />
+      <header-pets title="login" />
     </header>
 
     <main class="pageLogin">
@@ -49,7 +49,7 @@ export default {
     if (PetsLocalStorage.getItem("token")) {
       console.log("tem token: ", PetsLocalStorage.getItem("token"));
     } else {
-      console.log('não tem token: ',PetsLocalStorage.getItem("token"))
+      console.log("não tem token: ", PetsLocalStorage.getItem("token"));
     }
   },
   data() {
@@ -90,6 +90,10 @@ export default {
               this.user.birthDate = res.data.user.birthDate;
               this.user.picture_url = res.data.user.picture_url;
               PetsLocalStorage.setItem("user", this.user);
+            }
+            if (localStorage.getItem("token")) {
+              
+              // router.push("#/feed");
             }
             console.log("TOKEN: ", localStorage.getItem("token"));
           });

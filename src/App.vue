@@ -12,7 +12,7 @@ export default {
 </script>
 
 <style>
-@import url("https://fonts.googleapis.com/css2?family=Satisfy&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Delius&display=swap");
 html,
 body {
   margin: 0;
@@ -22,9 +22,9 @@ body {
 
 body {
   display: flex;
-  background-color: #ffb464;
+  background-color: #F9A862;
   flex-direction: column;
-  font-family: "Satisfy";
+  font-family: "Delius";
 }
 
 main {
