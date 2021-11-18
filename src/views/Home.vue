@@ -1,9 +1,20 @@
 <script>
 import headerPets from "../components/headerPets.vue";
+import Modal from "../components/Modal.vue";
 import PostItem from "../components/PostItem.vue";
 export default {
-  components: { headerPets, PostItem },
+  components: { headerPets, PostItem, Modal },
   name: "Home",
+  methods: {
+    showModalFunc: function() {
+      this.showModal = !this.showModal;
+    },
+  },
+  data() {
+    return {
+      showModal: false,
+    };
+  },
 };
 </script>
 
@@ -15,9 +26,15 @@ export default {
     <main class="pageFeed">
       <div class="feedList">
         <h2>Exemplos de feed (não acabados)</h2>
+        <button @click="showModalFunc">show</button>
         <post-item />
       </div>
     </main>
+    <footer></footer>
+    <modal
+      :showModal="showModal"
+      message="Por favor, entre com sua conta"
+    />
   </body>
 </template>
 
@@ -33,6 +50,6 @@ export default {
   width: fit-content;
   padding-left: 1rem;
   padding-right: 1rem;
-  background-color: #F9A862;
+  background-color: #f9a862;
 }
 </style>

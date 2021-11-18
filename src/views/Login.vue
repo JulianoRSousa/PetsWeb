@@ -92,8 +92,8 @@ export default {
               PetsLocalStorage.setItem("user", this.user);
             }
             if (localStorage.getItem("token")) {
-              
-              // router.push("#/feed");
+              console.log("TOKEN: ", localStorage.getItem("token"));
+              this.$router.go("/feed");
             }
             console.log("TOKEN: ", localStorage.getItem("token"));
           });
