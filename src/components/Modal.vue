@@ -50,7 +50,6 @@ export default {
   height: 100vh;
   position: fixed;
   background-color: transparent;
-  display: none;
   justify-content: center;
   align-items: center;
 }
