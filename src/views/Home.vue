@@ -1,9 +1,10 @@
 <script>
 import headerPets from "../components/headerPets.vue";
 import Modal from "../components/Modal.vue";
+import PetsFloatButton from '../components/PetsFloatButton.vue';
 import PostItem from "../components/PostItem.vue";
 export default {
-  components: { headerPets, PostItem, Modal },
+  components: { headerPets, PostItem, Modal, PetsFloatButton },
   name: "Home",
   methods: {
     showModalFunc: function() {
@@ -30,7 +31,9 @@ export default {
         <post-item />
       </div>
     </main>
-    <footer></footer>
+    <footer>
+      <pets-float-button title="teste"/>
+    </footer>
     <modal
       :showModal="showModal"
       message="Por favor, entre com sua conta"

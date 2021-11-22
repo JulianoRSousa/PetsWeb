@@ -26,16 +26,16 @@
           >
           <span class="description">{{ post.description }}</span>
           <div v-if="post.state == 1" class="infoStateContainer colorStateBlue">
-            <span class="infoStateText">{{ petStatus(post.state) }}</span>
+            <span class="infoStateText">encontrado</span>
           </div>
           <div
             v-else-if="post.state == 2"
             class="infoStateContainer colorStateRed"
           >
-            <span class="infoStateText">{{ petStatus(post.state) }}</span>
+            <span class="infoStateText">perdido</span>
           </div>
           <div v-else class="infoStateContainer">
-            <span class="infoStateText">{{ petStatus(post.state) }}</span>
+            <span class="infoStateText">adoção</span>
           </div>
         </div>
       </main>
@@ -114,12 +114,13 @@ export default {
 .userInfo {
   display: flex;
   flex: 1;
-  padding-left: 10px;
+  padding-left: 8px;
   flex-direction: column;
   font-family: "Delius";
   justify-content: space-evenly;
 }
 .username {
+  margin-left: -5px;
   font-size: 0.8rem;
   font-family: "Delius";
 }
@@ -140,7 +141,10 @@ export default {
   flex: 1;
   max-width: 100%;
   object-fit: cover;
+  background-color: red;
   border-radius: 0rem 2rem 0rem 0rem;
+  -webkit-mask-image: -webkit-gradient(linear, left bottom, left top, 
+    from(rgba(0,0,0,1)), to(rgba(0,0,0,.8)));
 }
 .mainInternalDate {
   text-align: center;
@@ -165,7 +169,6 @@ export default {
 .infoStateContainer {
   display: flex;
   flex: 3;
-  background-color: rgb(48, 138, 48);
   border-radius: 2rem 0px 0px 0px;
   width: 60%;
   align-self: flex-end;
