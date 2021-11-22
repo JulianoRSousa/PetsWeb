@@ -1,6 +1,10 @@
 <template>
-  <body class="style">
-    <div class="postContainer" v-for="(post, index) in data" :key="index">
+  <body class="grid">
+    <div
+      class="postContainer is-one-third"
+      v-for="(post, index) in data"
+      :key="index"
+    >
       <header id="headerUserInfo">
         <img :src="post.user.picture_url" class="userImage" />
         <div class="userInfo">
@@ -21,8 +25,17 @@
             >{{ post.pet.firstName }} {{ post.pet.lastName }}</span
           >
           <span class="description">{{ post.description }}</span>
-          <div class="infoStateContainer">
-            <span class="infoStateText">encontrado</span>
+          <div v-if="post.state == 1" class="infoStateContainer colorStateBlue">
+            <span class="infoStateText">{{ petStatus(post.state) }}</span>
+          </div>
+          <div
+            v-else-if="post.state == 2"
+            class="infoStateContainer colorStateRed"
+          >
+            <span class="infoStateText">{{ petStatus(post.state) }}</span>
+          </div>
+          <div v-else class="infoStateContainer">
+            <span class="infoStateText">{{ petStatus(post.state) }}</span>
           </div>
         </div>
       </main>
@@ -39,12 +52,24 @@ export default {
   data() {
     return {
       data: [],
+      colorState: "blue",
     };
   },
+  computed: {},
   methods: {
+    petStatus: function(postState) {
+      if (postState == "1") {
+        return "encontrado";
+      } else if (postState == "2") {
+        return "perdido";
+      } else {
+        return "doação";
+      }
+    },
     getOn: function() {
       api.get("/getmainfeed").then((res) => {
         this.data = res.data;
+        console.log("DATA[]: ", this.data);
       });
     },
   },
@@ -53,8 +78,11 @@ export default {
 
 <style>
 @import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@600&display=swap");
-.style {
-  display: flex;
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-row-gap: 2rem;
+  grid-column-gap: 2rem;
 }
 .postContainer {
   position: relative;
@@ -67,7 +95,6 @@ export default {
   min-width: 24rem;
   height: 17rem;
   width: 24rem;
-  margin: 50px;
   overflow: hidden;
   font-family: "Quicksand", sans-serif;
   font-size: 1.2rem;
@@ -138,12 +165,18 @@ export default {
 .infoStateContainer {
   display: flex;
   flex: 3;
-  background-color: #116ead;
+  background-color: rgb(48, 138, 48);
   border-radius: 2rem 0px 0px 0px;
   width: 60%;
   align-self: flex-end;
   justify-content: center;
   align-items: center;
+}
+.colorStateBlue {
+  background-color: rgb(34, 113, 204);
+}
+.colorStateRed {
+  background-color: rgb(196, 49, 49);
 }
 .infoStateText {
   color: white;
