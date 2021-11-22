@@ -61,6 +61,9 @@ export default {
         username: null,
         birthDate: null,
         picture_url: null,
+        fullName: null,
+        firstName: null,
+        lastName: null,
       },
       email: null,
       pass: null,
@@ -83,12 +86,17 @@ export default {
           )
           .then((res) => {
             if (res.status === 201) {
+              console.log('Res: ',res.data.user)
               PetsLocalStorage.setItem("token", res.data._id);
               this.user._id = res.data.user._id;
               this.user.email = res.data.user.email;
               this.user.username = res.data.user.username;
               this.user.birthDate = res.data.user.birthDate;
               this.user.picture_url = res.data.user.picture_url;
+              this.user.fullName =
+                res.data.user.firstName + " " + res.data.user.lastName;
+              this.user.firstName = res.data.user.firstName;
+              this.user.lastName = res.data.user.lastName;
               PetsLocalStorage.setItem("user", this.user);
             }
             if (localStorage.getItem("token")) {

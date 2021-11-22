@@ -55,7 +55,6 @@ export default {
       colorState: "blue",
     };
   },
-  computed: {},
   methods: {
     petStatus: function(postState) {
       if (postState == "1") {
@@ -69,7 +68,6 @@ export default {
     getOn: function() {
       api.get("/getmainfeed").then((res) => {
         this.data = res.data;
-        console.log("DATA[]: ", this.data);
       });
     },
   },
@@ -80,9 +78,10 @@ export default {
 @import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@600&display=swap");
 .grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-row-gap: 2rem;
-  grid-column-gap: 2rem;
+  grid-template-columns: repeat(auto-fill, minmax(24rem, 1fr));
+  grid-gap: 30px;
+  background: #f8b172;
+  padding-top: 2rem;
 }
 .postContainer {
   position: relative;
@@ -95,6 +94,7 @@ export default {
   min-width: 24rem;
   height: 17rem;
   width: 24rem;
+  margin: 0 auto 30px;
   overflow: hidden;
   font-family: "Quicksand", sans-serif;
   font-size: 1.2rem;
@@ -136,6 +136,7 @@ export default {
   display: flex;
   flex: 1;
   flex-direction: column;
+  overflow: hidden;
 }
 .mainInternalImage {
   flex: 1;
@@ -143,8 +144,13 @@ export default {
   object-fit: cover;
   background-color: red;
   border-radius: 0rem 2rem 0rem 0rem;
-  -webkit-mask-image: -webkit-gradient(linear, left bottom, left top, 
-    from(rgba(0,0,0,1)), to(rgba(0,0,0,.8)));
+  /* -webkit-mask-image: -webkit-gradient(
+    linear,
+    left bottom,
+    left top,
+    from(rgba(0, 0, 0, 1)),
+    to(rgba(0, 0, 0, 0.8))
+  ); */
 }
 .mainInternalDate {
   text-align: center;
