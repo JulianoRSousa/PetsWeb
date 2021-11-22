@@ -1,5 +1,5 @@
 <template>
-  <body>
+  <body class="style">
     <div class="postContainer" v-for="(post, index) in data" :key="index">
       <header id="headerUserInfo">
         <img :src="post.user.picture_url" class="userImage" />
@@ -13,7 +13,7 @@
       </header>
       <main class="mainContent">
         <div class="mainInternalDiv">
-          <img class="mainInternalImage" />
+          <img class="mainInternalImage" :src="post.pet.picture_url" />
           <span class="mainInternalDate">12 de Julho de 2021</span>
         </div>
         <div class="mainInternalDiv">
@@ -53,18 +53,21 @@ export default {
 
 <style>
 @import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@600&display=swap");
+.style {
+  display: flex;
+}
 .postContainer {
   position: relative;
   display: flex;
   flex-direction: column;
   background-color: white;
   box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
-  border-radius: 2.4rem 0px;
+  border-radius: 1.8rem 0px;
   min-height: 17rem;
   min-width: 24rem;
   height: 17rem;
   width: 24rem;
-  margin: 100px;
+  margin: 50px;
   overflow: hidden;
   font-family: "Quicksand", sans-serif;
   font-size: 1.2rem;
@@ -78,15 +81,20 @@ export default {
 }
 .userImage {
   width: 3.5rem;
-  padding-right: 10px;
+  border-radius: 50% 0%;
+  opacity: 80%;
 }
 .userInfo {
   display: flex;
   flex: 1;
+  padding-left: 10px;
   flex-direction: column;
+  font-family: "Delius";
+  justify-content: space-evenly;
 }
 .username {
   font-size: 0.8rem;
+  font-family: "Delius";
 }
 .optionIcon {
   width: 2.8rem;
@@ -96,17 +104,25 @@ export default {
   flex: 5;
 }
 .mainInternalDiv {
+  position: relative;
   display: flex;
   flex: 1;
   flex-direction: column;
 }
 .mainInternalImage {
   flex: 1;
-  margin: 0.2rem;
-  margin-left: 0.8rem;
+  max-width: 100%;
+  object-fit: cover;
+  border-radius: 0rem 2rem 0rem 0rem;
 }
 .mainInternalDate {
   text-align: center;
+  color: white;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  text-shadow: 0px 2px 2px rgba(0, 0, 0, 0.4);
 }
 .petName {
   flex: 1;
@@ -116,7 +132,6 @@ export default {
 }
 .description {
   flex: 8;
-  font-family: "Delius";
   margin: 5px;
   font-size: 1rem;
 }
@@ -124,7 +139,7 @@ export default {
   display: flex;
   flex: 3;
   background-color: #116ead;
-  border-radius: 2rem 0px;
+  border-radius: 2rem 0px 0px 0px;
   width: 60%;
   align-self: flex-end;
   justify-content: center;
@@ -132,6 +147,7 @@ export default {
 }
 .infoStateText {
   color: white;
-  font-size: 1rem;
+  font-size: 1.2rem;
+  font-family: "Delius";
 }
 </style>
