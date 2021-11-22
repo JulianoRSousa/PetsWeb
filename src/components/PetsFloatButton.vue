@@ -1,8 +1,6 @@
 <template>
-  <footer class="buttonPetsContainer">
-    <button class="buttonPets">
-      {{ title }}
-    </button>
+  <footer class="PetsFloatButtonContainer">
+    {{ title }}
   </footer>
 </template>
 
@@ -17,25 +15,23 @@ export default {
 </script>
 
 <style>
-.buttonPetsContainer {
-  box-shadow: 0px 3px 2px rgba(0, 0, 0, 0.25);
-  border-radius: 25px;
-  overflow: auto;
-  padding: 1px;
+.PetsFloatButtonContainer {
+  position: absolute;
+  display: flex;
+  bottom: 2rem;
+  right: 5rem;
+  padding: 1rem;
+  padding-top: 5px;
+  padding-bottom: 5px;
   width: fit-content;
-  background-color: #f2e3d9;
-}
-.buttonPets {
+  border-radius: 2rem;
+  border: 1px solid white;
+  background: linear-gradient(180deg, #fa4e4e 0%, #f86d56 77.6%, #ee5e3a 100%);
+  box-shadow: -2px 5px 10px rgba(0, 0, 0, 0.5);
+
   font-family: "Satisfy";
-  font-size: 1rem;
-  color: #f2e3d9;
-  border-width: 0px;
-  padding: 0.4rem;
-  padding-left: 1.5rem;
-  padding-right: 1.5rem;
-  text-align: center;
-  background: linear-gradient(180deg, #fc6464 0%, #f86d56 77.6%, #ee653a 100%);
-  border-radius: 25px;
+  font-size: 1.5rem;
+  color: white;
   cursor: pointer;
 }
 </style>

@@ -1,7 +1,7 @@
 <script>
 import headerPets from "../components/headerPets.vue";
 import Modal from "../components/Modal.vue";
-import PetsFloatButton from '../components/PetsFloatButton.vue';
+import PetsFloatButton from "../components/PetsFloatButton.vue";
 import PostItem from "../components/PostItem.vue";
 export default {
   components: { headerPets, PostItem, Modal, PetsFloatButton },
@@ -30,14 +30,10 @@ export default {
         <button @click="showModalFunc">show</button>
         <post-item />
       </div>
+      <pets-float-button title="Novo post +" />
     </main>
-    <footer>
-      <pets-float-button title="teste"/>
-    </footer>
-    <modal
-      :showModal="showModal"
-      message="Por favor, entre com sua conta"
-    />
+    <footer></footer>
+    <modal :showModal="showModal" message="Por favor, entre com sua conta" />
   </body>
 </template>
 
