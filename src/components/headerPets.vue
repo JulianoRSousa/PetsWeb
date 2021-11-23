@@ -8,7 +8,7 @@
         pets
       </router-link>
       <span v-if="showTitle" class="pageTitle">{{ title }}</span>
-      <dropdown :title='title'/>
+      <dropdown :title="title" />
     </header>
   </body>
 </template>
@@ -30,9 +30,6 @@ export default {
     };
   },
   methods: {
-    consolar: function(){
-      console.log('saiu')
-    }
   },
   props: {
     showTitle: Boolean,
@@ -48,7 +45,6 @@ export default {
   border-color: aliceblue;
   border-style: none none double none;
   background-color: #ff934c;
-  
 }
 .appName {
   display: flex;
@@ -69,7 +65,5 @@ export default {
   font-size: 1.5rem;
   color: white;
   text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  
 }
-
 </style>

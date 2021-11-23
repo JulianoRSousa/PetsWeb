@@ -22,7 +22,7 @@
         />
         <button-pets title="Entrar" />
         <div class="secondaryContainer">
-          <router-link to="/createacc">
+          <router-link to="/createaccount">
             <span class="secondaryOption">Criar uma conta</span>
           </router-link>
           <router-link to="/login">
@@ -44,13 +44,19 @@ import PetsLocalStorage from "../controller/PetsLocalStorage";
 
 export default {
   components: { InputPets, ButtonPets, HeaderPets },
-  name: "CreateAccount",
+  name: "Login",
   mounted() {
     if (PetsLocalStorage.getItem("token")) {
-      console.log("tem token: ", PetsLocalStorage.getItem("token"));
-    } else {
-      console.log("não tem token: ", PetsLocalStorage.getItem("token"));
+      console.log("token>> ", PetsLocalStorage.getItem("token"));
+      this.$router.push("/feed");
+    }else{
+      console.log('sem token')
     }
+  },
+  watch: {
+    token: function() {
+      this.$router.go("/feed");
+    },
   },
   data() {
     return {
@@ -86,7 +92,6 @@ export default {
           )
           .then((res) => {
             if (res.status === 201) {
-              console.log('Res: ',res.data.user)
               PetsLocalStorage.setItem("token", res.data._id);
               this.user._id = res.data.user._id;
               this.user.email = res.data.user.email;
@@ -98,12 +103,8 @@ export default {
               this.user.firstName = res.data.user.firstName;
               this.user.lastName = res.data.user.lastName;
               PetsLocalStorage.setItem("user", this.user);
+              this.token = res.data._id;
             }
-            if (localStorage.getItem("token")) {
-              console.log("TOKEN: ", localStorage.getItem("token"));
-              this.$router.go("/feed");
-            }
-            console.log("TOKEN: ", localStorage.getItem("token"));
           });
       } catch (error) {
         console.log("Error: ", error);

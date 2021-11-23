@@ -56,15 +56,6 @@ export default {
     };
   },
   methods: {
-    petStatus: function(postState) {
-      if (postState == "1") {
-        return "encontrado";
-      } else if (postState == "2") {
-        return "perdido";
-      } else {
-        return "doação";
-      }
-    },
     getOn: function() {
       api.get("/getmainfeed").then((res) => {
         this.data = res.data;

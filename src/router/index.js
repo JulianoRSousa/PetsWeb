@@ -5,6 +5,7 @@ import Feed from "../views/MainFeed.vue";
 import CreateAccount from "../views/CreateAccount.vue";
 import Home from "../views/Home.vue";
 import Login from "../views/Login.vue";
+import NewPost from "../views/NewPost.vue";
 
 Vue.use(Router);
 
@@ -41,6 +42,14 @@ const router = new Router({
       component: Login,
       meta: {
         guest: true,
+      },
+    },
+    {
+      name: "newPost",
+      path: "/newpost",
+      component: NewPost,
+      meta: {
+        requiresAuth: true,
       },
     },
   ],

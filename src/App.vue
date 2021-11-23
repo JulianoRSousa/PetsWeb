@@ -46,6 +46,7 @@ main {
   padding: 1rem;
   padding-top: 5px;
   padding-bottom: 5px;
+  align-items: center;
   width: fit-content;
   border-radius: 2rem;
   border: 1px solid white;
