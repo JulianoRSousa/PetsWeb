@@ -86,7 +86,7 @@
       </svg>
       notificações
     </router-link>
-    <router-link v-if="logged" to="/myprofile">
+    <router-link v-if="logged" to="/profile">
       <div class="menuOption">
         <svg
           style="margin-right:4px"
@@ -112,7 +112,7 @@
         meu perfil
       </div>
     </router-link>
-    <router-link class="menuOption" v-if="logged" to="/config">
+    <router-link class="menuOption" v-if="logged" to="/settings">
       <svg
         style="margin-right: 4px"
         xmlns="http://www.w3.org/2000/svg"

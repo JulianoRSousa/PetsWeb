@@ -1,12 +1,16 @@
 <template>
   <body>
     <header>
-      <header-pets :showTitle="false" title="criar conta"/>
+      <header-pets :showTitle="false" title="criar conta" />
     </header>
     <main class="pageCreateAcc">
       <form class="createAcc" @submit="sendCreateAcc">
         <span class="formTitle">Criar Conta</span>
-        <input-pets placeholder="Nome Completo" example="Pedro Silva" />
+        <input-pets
+          placeholder="Nome Completo"
+          v-model="fullName"
+          example="Pedro Silva"
+        />
         <input-pets
           placeholder="Data de nascimento"
           type="date"
@@ -54,13 +58,24 @@ export default {
   components: { InputPets, ButtonPets, HeaderPets },
   name: "CreateAccount",
   methods: {
+    createName: function() {
+      console.log("creating name");
+      if (this.fullName) {
+        const name = this.fullName.split(" ");
+        this.firstName = name.slice(0, 1).join(" ");
+        this.lastName = name.slice(1, this.firstName.length).join(" ");
+        return true;
+      }
+      return false;
+    },
     sendCreateAcc: function() {
+      // if (this.createName()) {
       Api.post(
         "/createlogin",
         {},
         {
           headers: {
-            fullname: this.fullName,
+            fullName: this.fullName,
             birthdate: this.birthDate,
             email: this.email,
             pass: this.pass,
@@ -69,11 +84,17 @@ export default {
       ).then((res) => {
         console.log(res.data);
       });
+      // } else {
+      //   console.log("Invalid Name: ", this.fullName);
+      //   return false;
+      // }
     },
   },
   data() {
     return {
       fullName: null,
+      firstName: null,
+      lastName: null,
       email: null,
       pass: null,
       repeatPass: null,

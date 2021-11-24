@@ -6,6 +6,9 @@ import CreateAccount from "../views/CreateAccount.vue";
 import Home from "../views/Home.vue";
 import Login from "../views/Login.vue";
 import NewPost from "../views/NewPost.vue";
+import UserNotifications from "../views/UserNotifications.vue";
+import UserProfile from "../views/UserProfile.vue";
+import UserSettings from "../views/UserSettings.vue";
 
 Vue.use(Router);
 
@@ -45,9 +48,33 @@ const router = new Router({
       },
     },
     {
-      name: "newPost",
+      name: "newpost",
       path: "/newpost",
       component: NewPost,
+      meta: {
+        requiresAuth: true,
+      },
+    },
+    {
+      name: "notifications",
+      path: "/notifications",
+      component: UserNotifications,
+      meta: {
+        requiresAuth: true,
+      },
+    },
+    {
+      name: "profile",
+      path: "/profile",
+      component: UserProfile,
+      meta: {
+        requiresAuth: true,
+      },
+    },
+    {
+      name: "settings",
+      path: "/settings",
+      component: UserSettings,
       meta: {
         requiresAuth: true,
       },
