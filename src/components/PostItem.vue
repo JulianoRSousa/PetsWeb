@@ -84,6 +84,7 @@ export default {
 @import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@600&display=swap");
 .grid {
   display: grid;
+  text-align: start;
   grid-template-columns: repeat(auto-fill, minmax(24rem, 1fr));
   grid-gap: 30px;
   background: #f8b172;
@@ -157,7 +158,7 @@ export default {
     left bottom,
     left top,
     from(rgba(0, 0, 0, 1)),
-    to(rgba(0, 0, 0, 0.8))
+    to(rgba(0, 0, 0, 0.6))
   );
 }
 .mainInternalDate {

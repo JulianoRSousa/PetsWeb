@@ -4,32 +4,63 @@
       <header-pets title="Criar Post" />
     </header>
 
-    <main class="pageLogin">
-      <!-- <form class="login" @submit="Login">
-        <span class="formTitle">Login</span>
-        <input-pets
-          placeholder="Email"
-          type="email"
-          example="pedro@gmail.com"
-          v-model="email"
-        />
-        <input-pets
-          placeholder="Senha"
-          type="password"
-          example="••••••••"
-          :minlength="8"
-          v-model="pass"
-        />
-        <button-pets title="Entrar" />
-        <div class="secondaryContainer">
-          <router-link to="/createaccount">
-            <span class="secondaryOption">Criar uma conta</span>
-          </router-link>
-          <router-link to="/login">
-            <span class="secondaryOption1">Esqueci minha senha</span>
-          </router-link>
+    <main class="pageNewPost">
+      <div class="formTitle">Criar publicação</div>
+      <div class="container">
+        <div>
+          <div class="headerInfo">
+            <div class="topHeaderInfo">
+              <img class="userImage" :src="loginInfo.user.picture_url" />
+              <div class="internHeaderContainer">
+                {{
+                  this.loginInfo.user.firstName +
+                    " " +
+                    this.loginInfo.user.lastName
+                }}
+                <select class="selectorState">
+                  <option class="firstOption" value="lose"
+                    >eu perdi meu pet</option
+                  >
+                  <option class="secondOption" value="found"
+                    >eu encontrei um pet</option
+                  >
+                  <option class="thirdOption" value="adoption"
+                    >tenho um pet para adoção</option
+                  >
+                </select>
+              </div>
+            </div>
+            <select class="petSelector" id="petList">
+              <option value="nu1">escolha um de seus pets:</option>
+            </select>
+            <span>Ou adicione um abaixo</span>
+          </div>
+          <div></div>
         </div>
-      </form> -->
+        <div>
+          <label for="petName">
+            Nome do pet:
+            <input
+              name="petName"
+              id="petName"
+              placeholder="ex: Brutus"
+              type="text"
+            />
+          </label>
+          <label for="postDescription">
+            Descrição:
+            <input
+              name="postDescription"
+              placeholder="ex: encontrado proximo a avenida ..."
+              type="image"
+              multiple
+            />
+          </label>
+        </div>
+        <footer>Adicionae uma foto
+          <input type="file" />
+        </footer>
+      </div>
     </main>
     <footer></footer>
   </body>
@@ -39,6 +70,7 @@
 // import InputPets from "../components/InputPets.vue";
 // import ButtonPets from "../components/ButtonPets.vue";
 import HeaderPets from "../components/headerPets.vue";
+import PetsLocalStorage from "../controller/PetsLocalStorage";
 // import api from "../services/api";
 // import PetsLocalStorage from "../controller/PetsLocalStorage";
 
@@ -49,51 +81,83 @@ export default {
     HeaderPets,
   },
   name: "NewPost",
-  mounted() {},
+  mounted() {
+    this.loginInfo = PetsLocalStorage.getItem("loginInfo");
+    console.log(this.loginInfo);
+  },
   watch: {},
   data() {
-    return {};
+    return {
+      loginInfo: {},
+      petState: 0,
+    };
   },
-  methods: {},
+  methods: {
+    chooseStyle: function() {
+      const selector = document.querySelector("#petState");
+      selector.classList.replace("secondOption", "firstOption");
+    },
+  },
 };
 </script>
 
 <style>
-@import url("https://fonts.googleapis.com/css2?family=Satisfy&display=swap");
-.pageLogin {
+.pageNewPost {
   display: flex;
-  align-items: center;
-  justify-content: center;
+  flex: 1;
+  flex-direction: column;
+  place-items: center;
+  padding-top: 3rem;
 }
-.login {
+.container {
+  background-color: white;
+  width: 50%;
+  border-radius: 2rem;
+  place-items: center;
+  padding: 2rem;
+}
+.headerInfo {
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
-  align-items: center;
-  width: fit-content;
-  padding-left: 1rem;
-  padding-right: 1rem;
-  height: 30rem;
-  border-radius: 3rem;
-  border-width: 1px;
-  background-color: #ffca85;
+  text-align: center;
 }
-
-.secondaryContainer {
+.topHeaderInfo {
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
-  align-content: space-around;
-  text-decoration: none;
-  width: 100%;
+  align-items: flex-start;
 }
-.secondaryOption {
-  text-decoration: none;
-  color: #505050;
+.userImage {
+  display: flex;
+  border-radius: 50%;
+  height: 4rem;
+  width: 4rem;
 }
-.secondaryOption1 {
-  text-decoration: none;
-  color: #505050;
-  cursor: default;
+.internHeaderContainer {
+  display: grid;
+  flex-direction: column;
+  padding-left: 1rem;
+}
+.selectorState {
+  margin-top: 10px;
+  border-radius: 1rem;
+  border: 1px solid #292929;
+  padding: 3px;
+  font-family: "Delius";
+}
+.firstOption {
+  color: red;
+}
+.secondOption {
+  color: rgb(16, 104, 219);
+}
+.thirdOption {
+  color: rgb(55, 136, 9);
+}
+.petSelector {
+  border-radius: 1rem;
+  border: 1px solid #292929;
+  padding: 3px;
+  font-family: "Delius";
+  margin-bottom: 10px;
 }
 </style>

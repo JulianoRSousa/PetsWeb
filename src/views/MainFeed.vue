@@ -21,7 +21,7 @@
               preserveAspectRatio="xMidYMid meet"
               viewBox="0 0 16 16"
             >
-              <g fill="black">
+              <g fill="white">
                 <path
                   fill-rule="evenodd"
                   d="M8 5.5a.5.5 0 0 1 .5.5v1.5H10a.5.5 0 0 1 0 1H8.5V10a.5.5 0 0 1-1 0V8.5H6a.5.5 0 0 1 0-1h1.5V6a.5.5 0 0 1 .5-.5z"
@@ -84,6 +84,7 @@ export default {
 
 <style>
 .mainPage {
+  text-align: center;
   background-color: #f9a862;
   overflow-y: scroll;
   -ms-overflow-style: none;

@@ -1,7 +1,5 @@
-// Academico: Juliano R. Sousa
-// Trabalho 2
-// TÓPICOS ESPECIAIS EM COMPUTAÇÃO APLICADA
-
+// Academico: Juliano R. Sousa // Trabalho 2 // TÓPICOS ESPECIAIS EM COMPUTAÇÃO
+APLICADA
 
 <template>
   <body>
@@ -17,6 +15,7 @@ export default {
 
 <style>
 @import url("https://fonts.googleapis.com/css2?family=Delius&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Satisfy&display=swap");
 html,
 body {
   margin: 0;
@@ -53,11 +52,11 @@ main {
   width: fit-content;
   border-radius: 2rem;
   border: 1px solid white;
-  background: linear-gradient(180deg, #FC6464 0%, #f86d56 77.6%, #F07556 100%);
+  background: linear-gradient(180deg, #fc6464 0%, #f86d56 77.6%, #f07556 100%);
   box-shadow: -2px 5px 10px rgba(0, 0, 0, 0.5);
   font-family: "Satisfy";
   font-size: 1.5rem;
-  color: black;
+  color: white;
   cursor: pointer;
 }
 </style>
