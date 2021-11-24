@@ -50,10 +50,11 @@ export default {
   display: flex;
   flex: 1;
   padding-left: 1rem;
-  justify-content: start;
+  justify-content: flex-start;
   align-items: center;
   font-size: 1.5rem;
-  color: white;
+  /* color: white; */
+  color: #292929;
   text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   text-decoration: none;
 }
@@ -63,7 +64,8 @@ export default {
   justify-content: center;
   align-items: center;
   font-size: 1.5rem;
-  color: white;
+  /* color: white; */
+  color: #292929;
   text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
 </style>

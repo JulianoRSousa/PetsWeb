@@ -1,7 +1,7 @@
 <template>
   <body>
     <header>
-      <header-pets title="" />
+      <header-pets title="Meu Perfil" />
     </header>
     <main>
     </main>
@@ -17,10 +17,15 @@ export default {
     HeaderPets,
   },
   name: "UserProfile",
-  mounted() {},
+  mounted() {
+
+  },
   watch: {},
   data() {
-    return {};
+    return {
+      postsInfo: [],
+      petsInfo: [],
+    };
   },
   methods: {},
 };

@@ -1,7 +1,7 @@
 <template>
   <body>
     <header>
-      <header-pets title="" />
+      <header-pets title="Notificações" />
     </header>
     <main>
     </main>

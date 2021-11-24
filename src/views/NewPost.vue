@@ -1,7 +1,7 @@
 <template>
   <body>
     <header>
-      <header-pets title="login" />
+      <header-pets title="Criar Post" />
     </header>
 
     <main class="pageLogin">
