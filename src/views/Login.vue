@@ -146,13 +146,19 @@ export default {
   text-decoration: none;
   width: 100%;
 }
+.formTitle {
+  font-size: 1.5rem;
+  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  margin-bottom: 2rem;
+  color: #292929;
+}
 .secondaryOption {
   text-decoration: none;
-  color: #505050;
+  color: #292929;
 }
 .secondaryOption1 {
   text-decoration: none;
-  color: #505050;
+  color: #292929;
   cursor: default;
 }
 </style>

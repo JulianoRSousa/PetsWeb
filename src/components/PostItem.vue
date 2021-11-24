@@ -6,18 +6,33 @@
       :key="index"
     >
       <header id="headerUserInfo">
-        <img :src="post.user.picture_url" class="userImage" />
+        <img :src="post.user.picture_url" alt="User image" class="userImage" />
         <div class="userInfo">
           <span>{{ post.user.firstName }} {{ post.user.lastName }}</span>
           <span class="username">@{{ post.user.username }}</span>
         </div>
         <div class="optionIcon">
-          <img />
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+            aria-hidden="true"
+            role="img"
+            width="1em"
+            height="1em"
+            preserveAspectRatio="xMidYMid meet"
+            viewBox="0 0 24 24"
+          >
+            <path d="M10 10h4v4h-4zm6 0h4v4h-4zM4 10h4v4H4z" fill="#292929" />
+          </svg>
         </div>
       </header>
       <main class="mainContent">
         <div class="mainInternalDiv">
-          <img class="mainInternalImage" :src="post.pet.picture_url" />
+          <img
+            class="mainInternalImage"
+            alt="Pet image"
+            :src="post.pet.picture_url"
+          />
           <span class="mainInternalDate">12 de Julho de 2021</span>
         </div>
         <div class="mainInternalDiv">
@@ -116,7 +131,10 @@ export default {
   font-family: "Delius";
 }
 .optionIcon {
-  width: 2.8rem;
+  display: grid;
+  padding: 0.5rem;
+  place-items: flex-start;
+  cursor: pointer;
 }
 .mainContent {
   display: flex;
@@ -133,15 +151,14 @@ export default {
   flex: 1;
   max-width: 100%;
   object-fit: cover;
-  background-color: red;
   border-radius: 0rem 2rem 0rem 0rem;
-  /* -webkit-mask-image: -webkit-gradient(
+  -webkit-mask-image: -webkit-gradient(
     linear,
     left bottom,
     left top,
     from(rgba(0, 0, 0, 1)),
     to(rgba(0, 0, 0, 0.8))
-  ); */
+  );
 }
 .mainInternalDate {
   text-align: center;

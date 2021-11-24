@@ -38,9 +38,11 @@
           v-model="repeatPass"
         />
         <p>
-          <input type="checkbox" v-model="terms" />
-          <span class="termsInfo">li e aceito os termos propostos neste </span>
-          <a href="https://github.com/JulianoRSousa/PetsWeb/">link</a>
+          <label for="checkBoxTerms" class="termsInfo">
+            <input id="checkBoxTerms" type="checkbox" v-model="terms" />
+            li e aceito os termos propostos neste
+            <a href="https://github.com/JulianoRSousa/PetsWeb/">link</a>
+          </label>
         </p>
         <button-pets title="Criar Conta" />
       </form>

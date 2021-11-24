@@ -5,7 +5,6 @@
       <h3 class="subtitle">{{ message }}</h3>
       <form class="form">
         <dropdown />
-        <!-- <side-login /> -->
       </form>
     </div>
   </body>
@@ -13,12 +12,10 @@
 
 <script>
 import Dropdown from "./Dropdown.vue";
-// import SideLogin from "./SideLogin.vue";
 
 export default {
   name: "Modal",
   components: {
-    // SideLogin,
     Dropdown,
   },
   watch: {
@@ -74,10 +71,9 @@ export default {
 }
 .subtitle {
   word-wrap: break-word;
-  color: white;
+  color: #292929;
   text-align: center;
   font-family: "Delius";
-  color: white;
 }
 .modal-container.show {
   display: flex;
@@ -107,7 +103,7 @@ export default {
   border: 4px solid white;
   background-color: #f9a862;
   cursor: pointer;
-  color: white;
+  color: #292929;
   box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.3);
 }
 </style>
