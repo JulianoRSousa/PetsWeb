@@ -1,51 +1,38 @@
 <template>
   <body>
     <header class="headerApp">
-      <a class="appName" href="http://localhost:8080/?#/">Pets</a>
-      <span class="pageTitle">{{ title }}</span>
-      <div class="dropdownMenu">
-        <button @click="toggleShow" class="dropbtn">Menu</button>
-        <div v-if="showMenu" class="dropdownContent">
-          <div class="menuItem">
-            <router-link to="/login">
-              <span class="menuOption">Login</span>
-            </router-link>
-            <router-link to="/createaccount">
-              <span class="menuOption">Criar Conta</span>
-            </router-link>
-            <router-link to="/">
-              <span @click="logOut" class="menuOption">Deslogar</span>
-            </router-link>
-          </div>
-        </div>
-      </div>
+      <router-link v-if="logged" class="appName" to="/feed">
+        pets
+      </router-link>
+      <router-link v-else class="appName" to="/">
+        pets
+      </router-link>
+      <span v-if="showTitle" class="pageTitle">{{ title }}</span>
+      <dropdown :title="title" />
     </header>
   </body>
 </template>
 
 <script>
+import PetsLocalStorage from "../controller/PetsLocalStorage";
+import Dropdown from "./Dropdown.vue";
 export default {
+  components: { Dropdown },
   name: "HeaderPets",
+  mounted() {
+    if (PetsLocalStorage.getItem("token")) {
+      this.logged = true;
+    }
+  },
   data() {
     return {
-      usuario: {},
-      nouser: {},
-      showMenu: false,
+      logged: false,
     };
   },
-  mounted() {
-    this.usuario = JSON.parse(localStorage.getItem("user"));
-  },
   methods: {
-    logOut: function() {
-      localStorage.removeItem("user");
-      localStorage.clear();
-    },
-    toggleShow: function() {
-      this.showMenu = !this.showMenu;
-    },
   },
   props: {
+    showTitle: Boolean,
     title: String,
   },
 };
@@ -54,74 +41,31 @@ export default {
 <style>
 .headerApp {
   display: flex;
-  padding-left: 1rem;
-  padding-right: 1rem;
-  background-image: linear-gradient(180deg, #ff8637, #ffb464);
+  min-height: 3.5rem;
+  border-color: aliceblue;
+  border-style: none none double none;
+  background-color: #ff934c;
 }
 .appName {
+  display: flex;
   flex: 1;
-  text-align: left;
+  padding-left: 1rem;
+  justify-content: flex-start;
+  align-items: center;
   font-size: 1.5rem;
-  color: white;
+  /* color: white; */
+  color: #292929;
   text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   text-decoration: none;
 }
 .pageTitle {
-  flex: 1;
-  text-align: center;
-  font-size: 1.5rem;
-  color: white;
-  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-}
-.dropdownMenu {
-  flex: 1;
-  text-align: end;
-  align-content: end;
-  justify-content: flex-end;
-  font-size: 1.5rem;
-  color: white;
-  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-}
-.dropdownContent {
   display: flex;
   flex: 1;
-  align-content: center;
-  justify-content: flex-end;
-}
-.menuItem {
-  display: flex;
-  height: 13rem;
-  width: fit-content;
-  padding: 1rem;
-  flex-direction: column;
-  border-radius: 3rem 0rem 3rem 3rem;
-  justify-content: space-around;
-  text-align: center;
-  background-color: #ff8637;
-  position: absolute;
-}
-.menuOption {
-  text-decoration: none;
-  color: white;
-}
-.dropbtn {
-  background-color: transparent;
-  color: white;
-  padding: 1rem;
+  justify-content: center;
+  align-items: center;
   font-size: 1.5rem;
-  color: white;
+  /* color: white; */
+  color: #292929;
   text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  font-family: "Satisfy";
-  cursor: pointer;
-  border: none;
-}
-.dropdown-content {
-  display: none;
-  position: absolute;
-  right: 0;
-  background-color: #f9f9f9;
-  min-width: 10rem;
-  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-  z-index: 1;
 }
 </style>

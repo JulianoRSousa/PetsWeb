@@ -1,23 +1,61 @@
 <template>
-  <div>
-    <div class="postContainer" v-for="(post, index) in data" :key="index">
-      <div class="userInfoContainer">
-        <div>
-          <span>icon</span>
+  <body class="grid">
+    <div
+      class="postContainer is-one-third"
+      v-for="(post, index) in data"
+      :key="index"
+    >
+      <header id="headerUserInfo">
+        <img :src="post.user.picture_url" alt="User image" class="userImage" />
+        <div class="userInfo">
+          <span>{{ post.user.firstName }} {{ post.user.lastName }}</span>
+          <span class="username">@{{ post.user.username }}</span>
         </div>
-        <img :src="post.user.picture_url" class="imgProfile" />
-        <div>
-          <h3>{{ post.user.firstName }} {{ post.user.lastName }}</h3>
-          <h4>@{{ post.user.username }}</h4>
+        <div class="optionIcon">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+            aria-hidden="true"
+            role="img"
+            width="1em"
+            height="1em"
+            preserveAspectRatio="xMidYMid meet"
+            viewBox="0 0 24 24"
+          >
+            <path d="M10 10h4v4h-4zm6 0h4v4h-4zM4 10h4v4H4z" fill="#292929" />
+          </svg>
         </div>
-        <div><span>icon2</span></div>
-      </div>
-      <div class="postContentContainer">
-        <h2>Name: {{ post.pet.firstName }} {{ post.pet.lastName }}</h2>
-        <h2>Description: {{ post.description }}</h2>
-      </div>
+      </header>
+      <main class="mainContent">
+        <div class="mainInternalDiv">
+          <img
+            class="mainInternalImage"
+            alt="Pet image"
+            :src="post.pet.picture_url"
+          />
+          <span class="mainInternalDate">12 de Julho de 2021</span>
+        </div>
+        <div class="mainInternalDiv">
+          <span class="petName"
+            >{{ post.pet.firstName }} {{ post.pet.lastName }}</span
+          >
+          <span class="description">{{ post.description }}</span>
+          <div v-if="post.state == 1" class="infoStateContainer colorStateBlue">
+            <span class="infoStateText">encontrado</span>
+          </div>
+          <div
+            v-else-if="post.state == 2"
+            class="infoStateContainer colorStateRed"
+          >
+            <span class="infoStateText">perdido</span>
+          </div>
+          <div v-else class="infoStateContainer">
+            <span class="infoStateText">adoção</span>
+          </div>
+        </div>
+      </main>
     </div>
-  </div>
+  </body>
 </template>
 
 <script>
@@ -29,6 +67,7 @@ export default {
   data() {
     return {
       data: [],
+      colorState: "blue",
     };
   },
   methods: {
@@ -42,25 +81,123 @@ export default {
 </script>
 
 <style>
-.postContainer {
-  background-color: #fff;
-  height: 27rem;
-  width: 49.5rem;
-  padding-top: 1rem;
-  padding-left: 1rem;
-  margin-top: 10rem;
-  box-shadow: 0.1rem 0.3rem 0.3rem 0.3rem rgba(0, 0, 0.25, 0.25);
-  border-radius: 3rem 0rem;
+@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@600&display=swap");
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(24rem, 1fr));
+  grid-gap: 30px;
+  background: #f8b172;
+  padding-top: 2rem;
 }
-.userInfoContainer {
+.postContainer {
+  position: relative;
   display: flex;
+  flex-direction: column;
+  background-color: white;
+  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
+  border-radius: 1.8rem 0px;
+  min-height: 17rem;
+  min-width: 24rem;
+  height: 17rem;
+  width: 24rem;
+  margin: 0 auto 30px;
+  overflow: hidden;
+  font-family: "Quicksand", sans-serif;
+  font-size: 1.2rem;
+  color: #333333;
+}
+#headerUserInfo {
+  display: flex;
+  flex: 1;
   flex-direction: row;
-  flex-wrap: wrap;
+  justify-content: space-between;
+}
+.userImage {
+  width: 3.5rem;
+  border-radius: 50% 0%;
+  opacity: 80%;
+}
+.userInfo {
+  display: flex;
+  flex: 1;
+  padding-left: 8px;
+  flex-direction: column;
+  font-family: "Delius";
+  justify-content: space-evenly;
+}
+.username {
+  margin-left: -5px;
+  font-size: 0.8rem;
+  font-family: "Delius";
+}
+.optionIcon {
+  display: grid;
+  padding: 0.5rem;
+  place-items: flex-start;
+  cursor: pointer;
+}
+.mainContent {
+  display: flex;
+  flex: 5;
+}
+.mainInternalDiv {
+  position: relative;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  overflow: hidden;
+}
+.mainInternalImage {
+  flex: 1;
+  max-width: 100%;
+  object-fit: cover;
+  border-radius: 0rem 2rem 0rem 0rem;
+  -webkit-mask-image: -webkit-gradient(
+    linear,
+    left bottom,
+    left top,
+    from(rgba(0, 0, 0, 1)),
+    to(rgba(0, 0, 0, 0.8))
+  );
+}
+.mainInternalDate {
+  text-align: center;
+  color: white;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  text-shadow: 0px 2px 2px rgba(0, 0, 0, 0.4);
+}
+.petName {
+  flex: 1;
+  font-size: 1.5rem;
+  color: #333333;
+  text-align: center;
+}
+.description {
+  flex: 8;
+  margin: 5px;
+  font-size: 1rem;
+}
+.infoStateContainer {
+  display: flex;
+  flex: 3;
+  border-radius: 2rem 0px 0px 0px;
+  width: 60%;
+  align-self: flex-end;
+  justify-content: center;
   align-items: center;
 }
-.imgProfile {
-  height: 3.7rem;
-  width: 3.7rem;
-  border-radius: 3rem 3rem;
+.colorStateBlue {
+  background-color: rgb(34, 113, 204);
+}
+.colorStateRed {
+  background-color: rgb(196, 49, 49);
+}
+.infoStateText {
+  color: white;
+  font-size: 1.2rem;
+  font-family: "Delius";
 }
 </style>
