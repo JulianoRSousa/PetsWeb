@@ -1,3 +1,8 @@
+// Academico: Juliano R. Sousa
+// Trabalho 2
+// TÓPICOS ESPECIAIS EM COMPUTAÇÃO APLICADA
+
+
 <template>
   <body>
     <router-view />
@@ -11,7 +16,7 @@ export default {
 </script>
 
 <style>
-@import url("https://fonts.googleapis.com/css2?family=Satisfy&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Satisfy&display=swap"); /*importação da fonte satisfy*/
 html,
 body {
   margin: 0;
