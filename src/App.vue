@@ -32,7 +32,6 @@ main {
 }
 .formTitle {
   font-size: 1.5rem;
-  /* color: white; */
   text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   margin-bottom: 2rem;
 }
@@ -48,11 +47,11 @@ main {
   width: fit-content;
   border-radius: 2rem;
   border: 1px solid white;
-  background: linear-gradient(180deg, #fa4e4e 0%, #f86d56 77.6%, #ee5e3a 100%);
+  background: linear-gradient(180deg, #FC6464 0%, #f86d56 77.6%, #F07556 100%);
   box-shadow: -2px 5px 10px rgba(0, 0, 0, 0.5);
   font-family: "Satisfy";
   font-size: 1.5rem;
-  /* color: white; */
+  color: black;
   cursor: pointer;
 }
 </style>
