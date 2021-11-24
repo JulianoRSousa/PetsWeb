@@ -73,6 +73,8 @@ export default {
       },
       email: null,
       pass: null,
+      notifications: null,
+      loginInfo: null,
     };
   },
   methods: {
@@ -93,6 +95,7 @@ export default {
           .then((res) => {
             if (res.status === 201) {
               PetsLocalStorage.setItem("token", res.data._id);
+              PetsLocalStorage.setItem("loginInfo", res.data);
               this.user._id = res.data.user._id;
               this.user.email = res.data.user.email;
               this.user.username = res.data.user.username;
