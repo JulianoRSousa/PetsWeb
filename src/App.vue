@@ -16,6 +16,8 @@ export default {
 <style>
 @import url("https://fonts.googleapis.com/css2?family=Delius&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Satisfy&display=swap");
+/* @import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@600&display=swap"); */
+
 html,
 body {
   margin: 0;

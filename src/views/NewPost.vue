@@ -32,33 +32,30 @@
             </div>
             <select class="petSelector" id="petList">
               <option value="nu1">escolha um de seus pets:</option>
+              <option value="anotherPet">Adicionar um novo pet</option>
             </select>
             <span>Ou adicione um abaixo</span>
           </div>
-          <div></div>
         </div>
         <div>
-          <label for="petName">
+          <label class="lblPetName" for="petName">
             Nome do pet:
+            <input id="petName" placeholder="ex: Brutus" type="text" />
+          </label>
+          <label class="lblPostDescription" for="postDescription">
+            Descrição:
             <input
-              name="petName"
-              id="petName"
-              placeholder="ex: Brutus"
+              id="postDescription"
+              placeholder="ex: encontrado proximo a avenida ..."
               type="text"
             />
           </label>
-          <label for="postDescription">
-            Descrição:
-            <input
-              name="postDescription"
-              placeholder="ex: encontrado proximo a avenida ..."
-              type="image"
-              multiple
-            />
-          </label>
         </div>
-        <footer>Adicionae uma foto
-          <input type="file" />
+        <footer>
+          <label class="lblImagePicker" for="inputImage">
+            Adicione uma foto:
+            <input id="imagePicker" type="image" />
+          </label>
         </footer>
       </div>
     </main>
@@ -67,28 +64,22 @@
 </template>
 
 <script>
-// import InputPets from "../components/InputPets.vue";
-// import ButtonPets from "../components/ButtonPets.vue";
 import HeaderPets from "../components/headerPets.vue";
 import PetsLocalStorage from "../controller/PetsLocalStorage";
 // import api from "../services/api";
-// import PetsLocalStorage from "../controller/PetsLocalStorage";
 
 export default {
   components: {
-    //  InputPets,
-    //  ButtonPets,
     HeaderPets,
   },
   name: "NewPost",
   mounted() {
     this.loginInfo = PetsLocalStorage.getItem("loginInfo");
-    console.log(this.loginInfo);
   },
   watch: {},
   data() {
     return {
-      loginInfo: {},
+      loginInfo: { user: {} },
       petState: 0,
     };
   },
@@ -159,5 +150,53 @@ export default {
   padding: 3px;
   font-family: "Delius";
   margin-bottom: 10px;
+}
+.lblPetName {
+  display: flex;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  color: #292929;
+}
+#petName {
+  display: flex;
+  flex: 1;
+  border-radius: 1rem;
+  font-family: "Delius";
+  border: 1px solid #292929;
+  padding: 3px;
+  padding-left: 0.8rem;
+  margin-left: 1rem;
+}
+.lblPostDescription{
+  display: flex;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  color: #292929;
+}
+#postDescription{
+  display: flex;
+  flex: 1;
+  border-radius: 1rem;
+  font-family: "Delius";
+  border: 1px solid #292929;
+  padding: 3px;
+  padding-left: 0.8rem;
+  margin-left: 1rem;
+}
+.lblImagePicker{
+   display: flex;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  color: #292929;
+}
+#imagePicker{
+  display: flex;
+  flex: 1;
+  border-radius: 1rem;
+  font-family: "Delius";
+  border: 1px solid #292929;
+  padding: 3px;
+  padding-left: 0.8rem;
+  margin-left: 1rem;
 }
 </style>

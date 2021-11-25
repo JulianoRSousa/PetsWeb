@@ -81,7 +81,6 @@ export default {
 </script>
 
 <style>
-@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@600&display=swap");
 .grid {
   display: grid;
   text-align: start;
@@ -103,7 +102,7 @@ export default {
   width: 24rem;
   margin: 0 auto 30px;
   overflow: hidden;
-  font-family: "Quicksand", sans-serif;
+  font-family: "Delius", sans-serif;
   font-size: 1.2rem;
   color: #333333;
 }
@@ -199,6 +198,5 @@ export default {
 .infoStateText {
   color: white;
   font-size: 1.2rem;
-  font-family: "Delius";
 }
 </style>

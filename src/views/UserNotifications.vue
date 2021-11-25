@@ -3,8 +3,7 @@
     <header>
       <header-pets title="Notificações" />
     </header>
-    <main>
-    </main>
+    <main></main>
     <footer></footer>
   </body>
 </template>
@@ -26,6 +25,4 @@ export default {
 };
 </script>
 
-<style>
-@import url("https://fonts.googleapis.com/css2?family=Satisfy&display=swap");
-</style>
+<style></style>

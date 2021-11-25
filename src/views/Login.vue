@@ -49,8 +49,8 @@ export default {
     if (PetsLocalStorage.getItem("token")) {
       console.log("token>> ", PetsLocalStorage.getItem("token"));
       this.$router.push("/feed");
-    }else{
-      console.log('sem token')
+    } else {
+      console.log("sem token");
     }
   },
   watch: {
@@ -79,7 +79,6 @@ export default {
   },
   methods: {
     Login: function() {
-      console.log("methodLogin");
       try {
         api
           .post(
@@ -118,7 +117,6 @@ export default {
 </script>
 
 <style>
-@import url("https://fonts.googleapis.com/css2?family=Satisfy&display=swap");
 .pageLogin {
   display: flex;
   align-items: center;
