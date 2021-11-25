@@ -66,15 +66,18 @@
           <label class="lblImagePicker" for="inputImage">
             Adicione uma foto:
             <input
-              id="imagePicker"
+              id="files"
               type="file"
-              accept="image/png, image/jpeg"
-              placeholder="teste"
+              accept=".png, .jpg, .jpeg"
+              @change="handleFileSelect"
               required
             />
           </label>
         </footer>
       </form>
+      <output id="list"></output>
+
+      <button @click="execFunc">Função</button>
     </main>
     <footer>
       <div class="postContainer">
@@ -101,7 +104,7 @@
         </header>
         <main class="mainContent">
           <div class="mainInternalDiv">
-            <img class="mainInternalImage" alt="Pet image" src="" />
+            <img class="mainInternalImage" alt="Pet image" :src="imageData" />
             <span class="mainInternalDate">12 de Julho de 2021</span>
           </div>
           <div class="mainInternalDiv">
@@ -150,9 +153,26 @@ export default {
       loginInfo: {},
       petList: [],
       petState: 0,
+      imageData: null,
     };
   },
   methods: {
+    handleFileSelect: function(evt) {
+      var files = evt.target.files[0];
+      var reader = new FileReader();
+      reader.onload = (function() {
+        return function(e) {
+          console.log("e>> ", e.target.result);
+          this.imageData = e.target.result;
+        };
+      })(files);
+      reader.readAsDataURL(files);
+    },
+    execFunc: function() {
+      this.imageData = document.querySelector("#imagePicker");
+      document.querySelector('#list').innerHTML(<img src="e.target.result" title="theFile.name" width="50" />)
+      console.log("imageData: ", this.imageData.files);
+    },
     chooseStyle: function() {
       const selector = document.querySelector("#petState");
       selector.classList.replace("secondOption", "firstOption");
