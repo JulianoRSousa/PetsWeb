@@ -162,7 +162,6 @@ export default {
       var reader = new FileReader();
       reader.onload = (function() {
         return function(e) {
-          console.log("e>> ", e.target.result);
           this.imageData = e.target.result;
         };
       })(files);
@@ -171,7 +170,6 @@ export default {
     execFunc: function() {
       this.imageData = document.querySelector("#imagePicker");
       document.querySelector('#list').innerHTML(<img src="e.target.result" title="theFile.name" width="50" />)
-      console.log("imageData: ", this.imageData.files);
     },
     chooseStyle: function() {
       const selector = document.querySelector("#petState");

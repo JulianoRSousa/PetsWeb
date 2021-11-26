@@ -67,7 +67,6 @@ export default {
     },
     showModalFunc: function() {
       if (!this.logged) {
-        console.log("logged? ", this.logged);
         this.showModal = !this.showModal;
       }
     },
@@ -75,7 +74,6 @@ export default {
   data() {
     return {
       showModal: false,
-      token: false,
       user: null,
     };
   },

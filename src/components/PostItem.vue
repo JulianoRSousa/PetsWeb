@@ -33,7 +33,7 @@
             alt="Pet image"
             :src="post.pet.picture_url"
           />
-          <span class="mainInternalDate">12 de Julho de 2021</span>
+          <span class="mainInternalDate">{{ post.postDate }}</span>
         </div>
         <div class="mainInternalDiv">
           <span class="petName"
@@ -146,28 +146,22 @@ export default {
   flex: 1;
   flex-direction: column;
   overflow: hidden;
+  
 }
 .mainInternalImage {
   flex: 1;
   max-width: 100%;
   object-fit: cover;
   border-radius: 0rem 2rem 0rem 0rem;
-  -webkit-mask-image: -webkit-gradient(
-    linear,
-    left bottom,
-    left top,
-    from(rgba(0, 0, 0, 1)),
-    to(rgba(0, 0, 0, 0.6))
-  );
 }
 .mainInternalDate {
   text-align: center;
-  color: white;
+  color: #292929;
   position: absolute;
   bottom: 0;
   left: 0;
   width: 100%;
-  text-shadow: 0px 2px 2px rgba(0, 0, 0, 0.4);
+  text-shadow: 0px 2px 2px rgba(255, 255, 255, 0.6);
 }
 .petName {
   flex: 1;

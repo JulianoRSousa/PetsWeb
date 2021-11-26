@@ -47,10 +47,7 @@ export default {
   name: "Login",
   mounted() {
     if (PetsLocalStorage.getItem("token")) {
-      console.log("token>> ", PetsLocalStorage.getItem("token"));
       this.$router.push("/feed");
-    } else {
-      console.log("sem token");
     }
   },
   watch: {

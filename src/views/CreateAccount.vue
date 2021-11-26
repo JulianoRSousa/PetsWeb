@@ -61,7 +61,6 @@ export default {
   name: "CreateAccount",
   methods: {
     createName: function() {
-      console.log("creating name");
       if (this.fullName) {
         const name = this.fullName.split(" ");
         this.firstName = name.slice(0, 1).join(" ");
@@ -83,13 +82,10 @@ export default {
             pass: this.pass,
           },
         }
-      ).then((res) => {
-        console.log(res.data);
+      ).then(() => {
+        alert("Conta criada com sucesso");
+        this.$router.push("/login");
       });
-      // } else {
-      //   console.log("Invalid Name: ", this.fullName);
-      //   return false;
-      // }
     },
   },
   data() {
