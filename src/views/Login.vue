@@ -20,7 +20,7 @@
           :minlength="8"
           v-model="pass"
         />
-        <button-pets title="Entrar" />
+        <button-pets title="Entrar"/>
         <div class="secondaryContainer">
           <router-link to="/createaccount">
             <span class="secondaryOption">Criar uma conta</span>

@@ -1,4 +1,8 @@
 <template>
+  <!-- AINDA ESTOU COM PROBLEMAS NO ENVIO DA IMAGEM AO SERVIDOR
+
+  FUNCIONALIDADES NÃO ACABADAS -->
+
   <body>
     <header>
       <header-pets title="Criar Post" />
@@ -66,20 +70,24 @@
           <label class="lblImagePicker" for="inputImage">
             Adicione uma foto:
             <input
+              type="file"
+              accept="image/*"
+              @change="handleImageSelect($event)"
+              id="file-input"
+            />
+            <!-- <input
               id="files"
               type="file"
               accept=".png, .jpg, .jpeg"
               @change="handleFileSelect"
-              required
-            />
+            /> -->
           </label>
         </footer>
       </form>
-      <output id="list"></output>
 
-      <button @click="execFunc">Função</button>
+      <button type="submit" @click="createNewPost">Função</button>
     </main>
-    <footer>
+    <!-- <footer>
       <div class="postContainer">
         <header id="headerUserInfo">
           <img :src="userInfo.picture_url" alt="User image" class="userImage" />
@@ -125,14 +133,14 @@
           </div>
         </main>
       </div>
-    </footer>
+    </footer> -->
   </body>
 </template>
 
 <script>
 import HeaderPets from "../components/headerPets.vue";
 import PetsLocalStorage from "../controller/PetsLocalStorage";
-// import api from "../services/api";
+import api from "../services/api";
 
 export default {
   components: {
@@ -153,27 +161,76 @@ export default {
       loginInfo: {},
       petList: [],
       petState: 0,
-      imageData: null,
+      imageData: {},
+      item: {
+        //...
+        image: null,
+        imageUrl: null,
+      },
     };
   },
   methods: {
-    handleFileSelect: function(evt) {
-      var files = evt.target.files[0];
-      var reader = new FileReader();
-      reader.onload = (function() {
-        return function(e) {
-          this.imageData = e.target.result;
-        };
-      })(files);
-      reader.readAsDataURL(files);
-    },
+    // handleFileSelect: function(evt) {
+    //   var files = evt.target.files[0];
+    //   var reader = new FileReader();
+    //   reader.onload = (function() {
+    //     return function(e) {
+    //       this.imageData = e.target.result;
+    //       console.log(this.imageData);
+    //     };
+    //   })(files);
+    //   reader.readAsDataURL(files);
+    // },
     execFunc: function() {
       this.imageData = document.querySelector("#imagePicker");
-      document.querySelector('#list').innerHTML(<img src="e.target.result" title="theFile.name" width="50" />)
+      document
+        .querySelector("#list")
+        .innerHTML(
+          <img src="e.target.result" title="theFile.name" width="50" />
+        );
     },
     chooseStyle: function() {
       const selector = document.querySelector("#petState");
       selector.classList.replace("secondOption", "firstOption");
+    },
+
+    handleImageSelect: function(e) {
+      const file = e.target.files[0];
+      // this.imageData = file;
+      // this.item.imageUrl = URL.createObjectURL(file);
+
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = (e) => {
+        this.imageData = e.target.result;
+        console.log(this.imageData);
+      };
+    },
+    createNewPost: function() {
+      // const img = {
+      //   type: this.imageData.type,
+      //   name: this.imageData.name || "",
+      // };
+      // console.log("IMG: ", img);
+
+      let formData = new FormData();
+      formData.append("picture", this.imageData);
+      formData.append("state", this.petState);
+      formData.append("description", this.postDescription);
+      // let data = new FormData();
+      // formData.append("name", "my-picture");
+      // data.append("file", event.target.files[0]);
+      api
+        .post("/createPost", formData, {
+          headers: {
+            "Content-Type": "image/*",
+            pet_id: "6019c07aa2fe3e001707508c",
+            token: this.loginInfo._id,
+          },
+        })
+        .then((response) => {
+          console.log("image upload response > ", response);
+        });
     },
   },
 };

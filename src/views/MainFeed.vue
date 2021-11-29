@@ -5,7 +5,9 @@
     </header>
     <main class="mainPage">
       <div>
-        <h2 v-if="this.user">Bem vindo, {{ this.user.fullName }}</h2>
+        <h2 v-if="this.user">
+          Bem vindo, {{ this.user.firstName | capitalize }}
+        </h2>
         <div>
           <post-item />
           <button class="pets-float-button" @click="newPostFunc">
@@ -60,6 +62,13 @@ export default {
       this.logged = true;
       this.user = PetsLocalStorage.getItem("user");
     }
+  },
+  filters: {
+    capitalize: function(value) {
+      if (!value) return "";
+      value = value.toString();
+      return value.charAt(0).toUpperCase() + value.slice(1);
+    },
   },
   methods: {
     newPostFunc: function() {

@@ -8,7 +8,6 @@ export default {
     headerPets,
     PostItem,
     Modal,
-    // PetsFloatButton
   },
   name: "Home",
   mounted() {
@@ -38,8 +37,7 @@ export default {
       <header-pets :showTitle="true" title="home" />
     </header>
     <main class="mainPage">
-      <h2>Exemplos de feed (não acabados)</h2>
-      <button @click="showModalFunc">show</button>
+      <h2>Exemplos de feed (sem ordenação personalizada )</h2>
       <div>
         <post-item />
       </div>
