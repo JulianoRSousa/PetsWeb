@@ -213,24 +213,24 @@ export default {
       // };
       // console.log("IMG: ", img);
 
-      let formData = new FormData();
-      formData.append("picture", this.imageData);
-      formData.append("state", this.petState);
-      formData.append("description", this.postDescription);
+      // let formData = new FormData();
+      // formData.append("picture", this.imageData);
+      // formData.append("state", this.petState);
+      // formData.append("description", this.postDescription);
       // let data = new FormData();
       // formData.append("name", "my-picture");
       // data.append("file", event.target.files[0]);
-      api
-        .post("/createPost", formData, {
-          headers: {
-            "Content-Type": "image/*",
-            pet_id: "6019c07aa2fe3e001707508c",
-            token: this.loginInfo._id,
-          },
-        })
-        .then((response) => {
-          console.log("image upload response > ", response);
-        });
+      // api
+      //   .post("/createPost", formData, {
+      //     headers: {
+      //       "Content-Type": "image/*",
+      //       pet_id: "6019c07aa2fe3e001707508c",
+      //       token: this.loginInfo._id,
+      //     },
+      //   })
+      //   .then((response) => {
+      //     console.log("image upload response > ", response);
+      //   });
     },
   },
 };
