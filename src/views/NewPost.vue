@@ -140,7 +140,7 @@
 <script>
 import HeaderPets from "../components/headerPets.vue";
 import PetsLocalStorage from "../controller/PetsLocalStorage";
-import api from "../services/api";
+// import api from "../services/api";
 
 export default {
   components: {
