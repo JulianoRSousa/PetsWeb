@@ -1,7 +1,7 @@
 <template>
   <body>
     <header>
-      <header-pets title="Notificações" />
+      <header-pets />
     </header>
     <main></main>
     <footer></footer>
@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import HeaderPets from "../components/headerPets.vue";
+import HeaderPets from '../components/HeaderPets.vue';
 
 export default {
   components: {

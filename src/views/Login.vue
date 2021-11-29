@@ -38,7 +38,7 @@
 <script>
 import InputPets from "../components/InputPets.vue";
 import ButtonPets from "../components/ButtonPets.vue";
-import HeaderPets from "../components/headerPets.vue";
+import HeaderPets from "../components/HeaderPets.vue";
 import api from "../services/api";
 import PetsLocalStorage from "../controller/PetsLocalStorage";
 

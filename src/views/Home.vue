@@ -1,36 +1,3 @@
-<script>
-import headerPets from "../components/headerPets.vue";
-import Modal from "../components/Modal.vue";
-import PetsLocalStorage from "../controller/PetsLocalStorage";
-import PostItem from "../components/PostItem.vue";
-export default {
-  components: {
-    headerPets,
-    PostItem,
-    Modal,
-  },
-  name: "Home",
-  mounted() {
-    if (PetsLocalStorage.getItem("token")) {
-      this.logged = true;
-    }
-  },
-  methods: {
-    showModalFunc: function() {
-      if (!this.logged) {
-        this.showModal = !this.showModal;
-      }
-    },
-  },
-  data() {
-    return {
-      logged: false,
-      showModal: false,
-    };
-  },
-};
-</script>
-
 <template>
   <body>
     <header style="vertical-align: baseline;">
@@ -70,6 +37,39 @@ export default {
     <modal :showModal="showModal" message="Por favor, entre com sua conta" />
   </body>
 </template>
+
+<script>
+import HeaderPets from "../components/HeaderPets.vue";
+import Modal from "../components/Modal.vue";
+import PetsLocalStorage from "../controller/PetsLocalStorage";
+import PostItem from "../components/PostItem.vue";
+export default {
+  components: {
+    HeaderPets,
+    PostItem,
+    Modal,
+  },
+  name: "Home",
+  mounted() {
+    if (PetsLocalStorage.getItem("token")) {
+      this.logged = true;
+    }
+  },
+  methods: {
+    showModalFunc: function() {
+      if (!this.logged) {
+        this.showModal = !this.showModal;
+      }
+    },
+  },
+  data() {
+    return {
+      logged: false,
+      showModal: false,
+    };
+  },
+};
+</script>
 
 <style>
 .mainPage {

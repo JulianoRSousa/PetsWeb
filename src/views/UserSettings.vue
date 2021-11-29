@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import HeaderPets from "../components/headerPets.vue";
+import HeaderPets from "../components/HeaderPets.vue";
 
 export default {
   components: {

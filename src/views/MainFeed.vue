@@ -46,7 +46,7 @@
 
 <script>
 import PostItem from "../components/PostItem.vue";
-import HeaderPets from "../components/headerPets.vue";
+import HeaderPets from "../components/HeaderPets.vue";
 import PetsLocalStorage from "../controller/PetsLocalStorage";
 import Modal from "../components/Modal.vue";
 
