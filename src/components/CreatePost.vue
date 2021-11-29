@@ -34,6 +34,7 @@
             </label>
 
             <create-pet
+            :loading="loading"
               v-if="stepController == 2"
               :petState="petState"
               :stepController="stepController"
@@ -115,8 +116,9 @@ export default {
   },
   data() {
     return {
+      loading: false,
       stepController: 0,
-      petState: 0,
+      petState: 1,
       petSelector: 0,
       showAddPetName: false,
       petName: "Brutus",
@@ -133,10 +135,16 @@ export default {
     };
   },
   methods: {
+    toogleloading: function(){
+      this.loading = !this.loading
+    },
     nextStep: function() {
       if (this.stepController == 0 && this.petState == 2) {
         this.stepController = 2;
         return;
+      }
+      if(this.stepController == 2){
+        this.toogleloading()
       }
       this.stepController++;
     },

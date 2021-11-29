@@ -1,56 +1,84 @@
 <template>
   <body>
-    <form class="containerAddPet">
-      <div>
-        <label for="checkPetName">
-          Eu sei o nome desse pet:
+    <form v-if="loading" class="containerAddPet">
+      <label v-if="!editPetName" class="lblPetName" for="petName">
+        Nome do pet:
+        <input
+          id="petName"
+          class="petNameInput"
+          placeholder="ex: Brutus"
+          type="text"
+          v-model="petFullName"
+        />
+      </label>
+      <label class="showPetNameInput" for="checkPetName">
+        Eu não sei o nome desse pet:
+        <input
+          id="checkPetName"
+          class="showPetNameInput"
+          type="checkbox"
+          v-model="editPetName"
+          @change="resetPetName"
+        />
+      </label>
+      <label for="petType" class="petType">
+        Este pet é um:
+        <select class="petTypeSelector" id="petType" v-model="petType">
+          <option value="DOG">Cachorro</option>
+          <option value="CAT">Gato</option>
+          <option value="NONE">Outro</option>
+        </select>
+      </label>
+      <div class="petSexSelector">
+        Esse pet é:
+        <label class="petSex" for="petSexMaleTrue">
+          macho
           <input
-            name="checkPetName"
-            class="showPetNameInput"
-            placeholder="ex: Brutus"
-            type="checkbox"
-            v-model="editPetName"
+            id="petSexMaleTrue"
+            :value="true"
+            v-model="petMale"
+            type="radio"
           />
-          <label v-if="editPetName" class="lblPetName" for="petName">
-            Nome do pet:
-            <input
-              name="petName"
-              class="petNameInput"
-              placeholder="ex: Brutus"
-              type="text"
-              v-model="petFullName"
-            />
-          </label>
         </label>
-        <!-- <label class="colorSelector" for="colorSelector">
-          Escolha a cor mais semelhante a do pet:
-          <input type="image" />
-        </label> -->
-        <label for="petType" class="petType">
-          Este pet é um:
-          <select name="petType" v-model="petType">
-            <option value="DOG">Cachorro</option>
-            <option value="CAT">Gato</option>
-            <option value="NONE">Outro</option>
-          </select>
-        </label>
-        <div class="petSex">
-          Esse pet é:
-          <label for="petSex">
-            Macho
-            <input :value="true" v-model="petMale" type="radio" />
-          </label>
-          <label for="petSex">
-            Fêmea
-            <input :value="false" v-model="petMale" type="radio" />
-          </label>
-        </div>
-        <label class="lblImagePetPicker" for="inputImage">
-          Adicione uma foto do pet:
-          <input type="file" accept="image/*" id="file-input" />
+        <label class="petSex" for="petSexMaleFalse">
+          fêmea
+          <input
+            id="petSexMaleFalse"
+            :value="false"
+            v-model="petMale"
+            type="radio"
+          />
         </label>
       </div>
+      <label class="lblImagePetPicker" for="file-input">
+        Adicionar uma foto do pet
+        <input
+          @change="imageName"
+          type="file"
+          accept="image/*"
+          id="file-input"
+        />
+      </label>
+      <span v-if="selectedImage">{{ selectedImage }}</span>
     </form>
+    <div v-else class="modal-containerAlert">
+      <div class="modalAlert">
+        <h3 v-if="loadingRequest == 'loading'" class="subtitleLoading">
+          Adicionando pet . . .
+        </h3>
+        <div class="loader"/>
+
+        <div v-if="loadingRequest == 'success'">
+          <h3 class="subtitleSuccess">Pet adicionado com sucesso!!</h3>
+          <button @click="nextStep">Ok</button>
+        </div>
+
+        <div v-if="loadingRequest == 'failed'">
+          <h3 class="subtitleFailed">Aconteceu um erro!! Tente novamente</h3>
+          <button @click="nextStep">Ok</button>
+        </div>
+      </div>
+    </div>
   </body>
 </template>
 
@@ -66,25 +94,36 @@ export default {
   },
   data() {
     return {
+      showModal: false,
       petSelector: 0,
-      editPetName: true,
+      editPetName: false,
       petFirstName: "",
       petLastName: "",
       petFullName: "",
       loginInfo: {},
       petColor: {},
       petMale: true,
-      petType: "NONE",
-      petCoatSize: 'NONE',
-      petBirthdate: 'NONE'
+      petType: "DOG",
+      petCoatSize: "NONE",
+      petBirthdate: "NONE",
+      selectedImage: "",
+      loadingRequest: "loading",
     };
   },
   props: {
+    loading: Boolean,
     petState: Number,
     stepController: Number,
     thisStep: Number,
   },
   methods: {
+    imageName: function() {
+      var image = document.querySelector("#file-input");
+      this.selectedImage = image.files[0].name;
+    },
+    resetPetName: function() {
+      this.petFullName = "";
+    },
     createNewPet: function() {
       try {
         const name = this.petFullName.split(" ");
@@ -127,18 +166,137 @@ export default {
 
 <style>
 .containerAddPet {
+  display: flex;
+  flex-direction: column;
+  place-items: start;
   text-align: start;
   background-color: white;
   width: max-content;
-  place-items: center;
-}
-.showPetNameInput {
-  margin-bottom: 1rem;
 }
 .lblPetName {
   margin-bottom: 1rem;
 }
+.showPetNameInput {
+  margin-bottom: 1rem;
+}
+.petType {
+  margin-bottom: 1rem;
+}
+.petTypeSelector {
+  border-radius: 1rem;
+  padding: 3px;
+  font-family: "Delius";
+  border: 1px solid #292929;
+}
+.petSexSelector {
+  margin-bottom: 1rem;
+  padding: 3px;
+  font-family: "Delius";
+}
+.petSex {
+  margin-bottom: 1rem;
+  border-radius: 1rem;
+  border: 1px solid #292929;
+  padding: 3px;
+  padding-left: 10px;
+  font-family: "Delius";
+  margin-left: 0.5rem;
+}
+#file-input {
+  display: none;
+}
+.lblImagePetPicker {
+  display: flex;
+  width: 90%;
+  height: 3rem;
+  place-items: center;
+  justify-content: center;
+  align-self: center;
+  color: white;
+  border-radius: 1rem;
+  background-color: rgb(86, 125, 255);
+  border: 1px solid #292929;
+  box-shadow: 0 4px 4px 0 rgb(86, 125, 255, 0.3);
+}
+.imageName {
+  font-family: "Delius";
+  font-size: 0.5rem;
+}
+.loader {
+  display: flex;
+  border: 9px solid white; /* Light grey */
+  border-top: 9px solid #006af5; /* Blue */
+  border-radius: 50%;
+  width: 4rem;
+  height: 4rem;
+  animation: spin 2s linear infinite;
+}
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+.modal-containerAlert {
+  display: flex;
+  top: 0px;
+  left: 0px;
+  z-index: 2000;
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  background-color: transparent;
+  justify-content: center;
+  align-items: center;
+}
+.modalAlert {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  background-color: #ff8636;
+  max-width: 30%;
+  min-width: 320px;
+  padding: 40px;
+  border: 10px double white;
+  box-shadow: 0 0 0 10px white;
+  position: relative;
+  border-radius: 30px;
+  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.3);
+  justify-content: center;
+  align-items: center;
+}
+.subtitleLoading {
+  word-wrap: break-word;
+  color: #292929;
+  text-align: center;
+  font-family: "Delius";
+}
+.subtitleSuccess {
+  word-wrap: break-word;
+  color: #042eb8;
+  text-align: center;
+  font-family: "Delius";
+}
+.subtitleFailed {
+  word-wrap: break-word;
+  color: #d61010;
+  text-align: center;
+  font-family: "Delius";
+}
 
+@keyframes modalAnim {
+  from {
+    opacity: 0;
+    transform: translate3d(0, -60px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+/* 
 .headerInfo {
   display: flex;
   flex-direction: column;
@@ -239,5 +397,5 @@ export default {
   display: grid;
   padding: 0.5rem;
   place-items: flex-start;
-}
+} */
 </style>
