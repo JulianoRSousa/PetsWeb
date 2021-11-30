@@ -1,6 +1,7 @@
 <template>
   <body>
     <header>
+      <pets-header :showTitle="false" title="Nova Postagem" />
     </header>
     <main>
       <create-post />
@@ -57,8 +58,9 @@
 
 <script>
 import CreatePost from "../components/CreatePost.vue";
+import PetsHeader from '../components/PetsHeader.vue';
 export default {
-  components: {CreatePost },
+  components: {CreatePost, PetsHeader },
 };
 </script>
 

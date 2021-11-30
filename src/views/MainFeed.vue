@@ -1,6 +1,7 @@
 <template>
   <body>
     <header>
+      <pets-header :showTitle="false" title="Meu Feed" />
     </header>
     <main class="mainPage">
       <div>
@@ -47,11 +48,13 @@
 import PostItem from "../components/PostItem.vue";
 import PetsLocalStorage from "../controller/PetsLocalStorage";
 import Modal from "../components/Modal.vue";
+import PetsHeader from '../components/PetsHeader.vue';
 
 export default {
   components: {
     PostItem,
     Modal,
+    PetsHeader,
   },
   name: "CreateAccount",
   mounted() {

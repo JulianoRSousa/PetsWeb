@@ -1,6 +1,7 @@
 <template>
   <body>
     <header>
+      <pets-header :showTitle="false" title="Configurações" />
     </header>
     <main>
     </main>
@@ -9,9 +10,11 @@
 </template>
 
 <script>
+import PetsHeader from '../components/PetsHeader.vue';
 
 export default {
   components: {
+    PetsHeader
   },
   name: "UserSettings",
   mounted() {},

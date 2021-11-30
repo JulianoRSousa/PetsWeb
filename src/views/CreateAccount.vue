@@ -1,6 +1,7 @@
 <template>
   <body>
     <header>
+      <pets-header :showTitle="false" title="Criar Conta"/>
     </header>
     <main class="pageCreateAcc">
       <form class="createAcc" @submit="sendCreateAcc">
@@ -54,9 +55,11 @@
 import InputPets from "../components/InputPets.vue";
 import ButtonPets from "../components/ButtonPets.vue";
 import Api from "../services/api";
+import PetsHeader from '../components/PetsHeader.vue';
 export default {
-  components: { InputPets, ButtonPets, },
+  components: { InputPets, ButtonPets, PetsHeader, },
   name: "CreateAccount",
+    PetsHeader,
   methods: {
     createName: function() {
       if (this.fullName) {
