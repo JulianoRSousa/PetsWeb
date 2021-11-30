@@ -168,8 +168,8 @@ export default {
 .containerAddPet {
   display: flex;
   flex-direction: column;
-  place-items: start;
-  text-align: start;
+  place-items: flex-start;
+  text-align: flex-start;
   background-color: white;
   width: max-content;
 }
