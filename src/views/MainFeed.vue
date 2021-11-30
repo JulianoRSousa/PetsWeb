@@ -1,7 +1,7 @@
 <template>
   <body>
     <header>
-      <HeaderPets :showTitle="false" title="Feed" />
+      <!-- <HeaderPets :showTitle="false" title="Feed" /> -->
     </header>
     <main class="mainPage">
       <div>
@@ -46,14 +46,14 @@
 
 <script>
 import PostItem from "../components/PostItem.vue";
-import HeaderPets from "../components/HeaderPets.vue";
+// import HeaderPets from "../components/HeaderPets.vue";
 import PetsLocalStorage from "../controller/PetsLocalStorage";
 import Modal from "../components/Modal.vue";
 
 export default {
   components: {
     PostItem,
-    HeaderPets,
+    // HeaderPets,
     Modal,
   },
   name: "CreateAccount",
