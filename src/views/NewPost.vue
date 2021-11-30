@@ -1,7 +1,7 @@
 <template>
   <body>
     <header>
-      <header-pets :showTitle="false" title="Criar Publicação" />
+      <HeaderPets :showTitle="false" title="Criar Publicação" />
     </header>
     <main>
       <create-post />

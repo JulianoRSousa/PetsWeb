@@ -1,7 +1,7 @@
 <template>
   <body>
     <header>
-      <header-pets title="login" />
+      <HeaderPets :showTitle="false" title="Login" />
     </header>
 
     <main class="pageLogin">
@@ -31,7 +31,6 @@
         </div>
       </form>
     </main>
-    <footer></footer>
   </body>
 </template>
 

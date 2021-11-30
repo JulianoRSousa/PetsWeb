@@ -1,7 +1,7 @@
 <template>
   <body>
     <header>
-      <header-pets title="Meu Perfil" />
+      <HeaderPets :showTitle="false" title="Meu Perfil" />
     </header>
     <main>
     </main>

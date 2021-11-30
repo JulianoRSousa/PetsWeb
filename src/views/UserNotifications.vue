@@ -1,7 +1,7 @@
 <template>
   <body>
     <header>
-      <header-pets />
+      <HeaderPets :showTitle="false" title="Notifications" />
     </header>
     <main></main>
     <footer></footer>

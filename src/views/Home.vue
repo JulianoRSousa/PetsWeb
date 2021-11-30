@@ -1,7 +1,7 @@
 <template>
   <body>
     <header style="vertical-align: baseline;">
-      <header-pets :showTitle="true" title="home" />
+      <HeaderPets :showTitle="true" title="home" />
     </header>
     <main class="mainPage">
       <h2>Exemplos de feed (sem ordenação personalizada )</h2>
@@ -33,7 +33,6 @@
         </svg>
       </button>
     </main>
-    <footer></footer>
     <modal :showModal="showModal" message="Por favor, entre com sua conta" />
   </body>
 </template>

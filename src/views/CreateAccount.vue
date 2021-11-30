@@ -1,7 +1,7 @@
 <template>
   <body>
     <header>
-      <header-pets :showTitle="false" title="Criar conta"/>
+      <HeaderPets :showTitle="false" title="Criar conta"/>
     </header>
     <main class="pageCreateAcc">
       <form class="createAcc" @submit="sendCreateAcc">

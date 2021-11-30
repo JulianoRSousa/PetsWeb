@@ -1,7 +1,7 @@
 <template>
   <body>
     <header>
-      <header-pets title="Feed" />
+      <HeaderPets :showTitle="false" title="Feed" />
     </header>
     <main class="mainPage">
       <div>
