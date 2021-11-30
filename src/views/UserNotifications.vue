@@ -1,7 +1,6 @@
 <template>
   <body>
     <header>
-      <HeaderPets :showTitle="false" title="Notifications" />
     </header>
     <main></main>
     <footer></footer>
@@ -9,11 +8,10 @@
 </template>
 
 <script>
-import HeaderPets from '../components/HeaderPets.vue';
 
 export default {
   components: {
-    HeaderPets,
+   
   },
   name: "UserNotifications",
   mounted() {},

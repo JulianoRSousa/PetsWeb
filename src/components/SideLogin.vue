@@ -24,7 +24,6 @@ export default {
     <h2>Login</h2>
     <input-pets placeholder="email" type="text" v-model="user.email" />
     <input-pets placeholder="senha" type="password" v-model="user.pass" />
-    <!-- <a href="" id="passrec">esqueceu sua senha?</a> -->
     <sign-button title="entrar" />
     <sign-button title="criar conta" />
   </div>

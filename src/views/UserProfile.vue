@@ -1,20 +1,15 @@
 <template>
   <body>
-    <header>
-      <HeaderPets :showTitle="false" title="Meu Perfil" />
-    </header>
-    <main>
-    </main>
+    <header></header>
+    <main></main>
     <footer></footer>
   </body>
 </template>
 
 <script>
-import HeaderPets from "../components/HeaderPets.vue";
 
 export default {
   components: {
-    HeaderPets,
   },
   name: "UserProfile",
   mounted() {
@@ -31,5 +26,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>

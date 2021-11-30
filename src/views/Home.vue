@@ -1,7 +1,6 @@
 <template>
   <body>
     <header style="vertical-align: baseline;">
-      <HeaderPets :showTitle="true" title="home" />
     </header>
     <main class="mainPage">
       <h2>Exemplos de feed (sem ordenação personalizada )</h2>
@@ -38,13 +37,11 @@
 </template>
 
 <script>
-import HeaderPets from "../components/HeaderPets.vue";
 import Modal from "../components/Modal.vue";
 import PetsLocalStorage from "../controller/PetsLocalStorage";
 import PostItem from "../components/PostItem.vue";
 export default {
   components: {
-    HeaderPets,
     PostItem,
     Modal,
   },

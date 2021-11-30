@@ -1,7 +1,6 @@
 <template>
   <body>
     <header>
-      <HeaderPets :showTitle="false" title="Criar Publicação" />
     </header>
     <main>
       <create-post />
@@ -58,9 +57,8 @@
 
 <script>
 import CreatePost from "../components/CreatePost.vue";
-import HeaderPets from "../components/HeaderPets.vue";
 export default {
-  components: { HeaderPets, CreatePost },
+  components: {CreatePost },
 };
 </script>
 

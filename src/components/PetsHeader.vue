@@ -18,7 +18,7 @@ import PetsLocalStorage from "../controller/PetsLocalStorage";
 import Dropdown from "./Dropdown.vue";
 export default {
   components: { Dropdown },
-  name: "HeaderPets",
+  name: "pets-header",
   mounted() {
     if (PetsLocalStorage.getItem("token")) {
       this.logged = true;

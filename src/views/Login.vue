@@ -1,7 +1,6 @@
 <template>
   <body>
     <header>
-      <HeaderPets :showTitle="false" title="Login" />
     </header>
 
     <main class="pageLogin">
@@ -37,12 +36,11 @@
 <script>
 import InputPets from "../components/InputPets.vue";
 import ButtonPets from "../components/ButtonPets.vue";
-import HeaderPets from "../components/HeaderPets.vue";
 import api from "../services/api";
 import PetsLocalStorage from "../controller/PetsLocalStorage";
 
 export default {
-  components: { InputPets, ButtonPets, HeaderPets },
+  components: { InputPets, ButtonPets, },
   name: "Login",
   mounted() {
     if (PetsLocalStorage.getItem("token")) {
