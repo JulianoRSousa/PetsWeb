@@ -1,6 +1,6 @@
 <template>
   <body>
-    <form v-if="loading" class="containerAddPet">
+    <form v-if="loadingStatus == 'none'" class="containerAddPet">
       <label v-if="!editPetName" class="lblPetName" for="petName">
         Nome do pet:
         <input
@@ -50,51 +50,51 @@
           />
         </label>
       </div>
-      <label class="lblImagePetPicker" for="file-input">
-        Adicionar uma foto do pet
-        <input
-          @change="imageName"
-          type="file"
-          accept="image/*"
-          id="file-input"
-        />
-      </label>
+      <div class="petButtonsContainer">
+        <label class="lblImagePetPicker" for="file-input">
+          Adicionar uma foto do pet
+          <input
+            @change="imageName"
+            type="file"
+            accept="image/*"
+            id="file-input"
+          />
+        </label>
+        <div @click="createNewPet" class="btnCreatePet">Adicionar Pet</div>
+      </div>
       <span v-if="selectedImage">{{ selectedImage }}</span>
     </form>
     <div v-else class="modal-containerAlert">
-      <div class="modalAlert">
-        <h3 v-if="loadingRequest == 'loading'" class="subtitleLoading">
-          Adicionando pet . . .
-        </h3>
-        <div class="loader"/>
+      <div v-if="loadingStatus == 'loading'" class="modalAlert">
+        <h3 class="subtitleLoading">Adicionando pet . . .</h3>
+        <div class="loader" />
+      </div>
 
-        <div v-if="loadingRequest == 'success'">
-          <h3 class="subtitleSuccess">Pet adicionado com sucesso!!</h3>
-          <button @click="nextStep">Ok</button>
-        </div>
+      <div v-if="loadingStatus == 'success'" class="modalAlert">
+        <h3 class="subtitleSuccess">Pet adicionado com sucesso!!</h3>
+        <button @click="success">Ok</button>
+      </div>
 
-        <div v-if="loadingRequest == 'failed'">
-          <h3 class="subtitleFailed">Aconteceu um erro!! Tente novamente</h3>
-          <button @click="nextStep">Ok</button>
-        </div>
+      <div v-if="loadingStatus == 'failed'" class="modalAlert">
+        <h3 class="subtitleFailed">Aconteceu um erro!! Tente novamente</h3>
+        <button @click="failed">Ok</button>
       </div>
     </div>
   </body>
 </template>
 
 <script>
-import api from "../services/api";
+// import api from "../services/api";
 import PetsLocalStorage from "../controller/PetsLocalStorage";
 
 export default {
   components: {},
   name: "CreatePet",
-  created: function() {
+  created: function () {
     this.loginInfo = PetsLocalStorage.getItem("loginInfo");
   },
   data() {
     return {
-      showModal: false,
       petSelector: 0,
       editPetName: false,
       petFirstName: "",
@@ -107,58 +107,62 @@ export default {
       petCoatSize: "NONE",
       petBirthdate: "NONE",
       selectedImage: "",
-      loadingRequest: "loading",
+      loadingStatus: "loading",
     };
   },
   props: {
-    loading: Boolean,
     petState: Number,
     stepController: Number,
-    thisStep: Number,
+    failed: Function,
+    success: Function,
   },
   methods: {
-    imageName: function() {
+    imageName: function () {
       var image = document.querySelector("#file-input");
       this.selectedImage = image.files[0].name;
     },
-    resetPetName: function() {
+    resetPetName: function () {
       this.petFullName = "";
     },
-    createNewPet: function() {
-      try {
-        const name = this.petFullName.split(" ");
-        this.petFirstName = name.slice(0, 1).join(" ");
-        this.petLastName = name.slice(1, this.petFirstName.length).join(" ");
-        var formData = new FormData();
-        var imagePetFile = document.querySelector("#file-input");
-        formData.append("profilePicture", imagePetFile.files[0]);
-        formData.append("firstName", this.petFirstName);
-        formData.append("lastName", this.petLastName);
-        formData.append("color", this.petColor);
-        formData.append("male", this.petMale);
-        formData.append("type", this.petType);
-        formData.append("state", this.petState);
-        formData.append("coatSize", this.petCoatSize);
-        formData.append("birthdate", this.petBirthdate);
+    createNewPet: function () {
+     console.log('create')
+     this.showModal = true;
+     console.log('created')
 
-        api
-          .post("/createpet", formData, {
-            headers: {
-              "Content-Type": "image/*",
-              token: this.loginInfo._id,
-            },
-          })
-          .then((response) => {
-            if (response.status == 200) {
-              alert("Pet adicionado com sucesso");
-            } else {
-              alert("Erro ao adicionar o pet");
-            }
-          });
-      } catch (error) {
-        console.log(error);
-        alert(error);
-      }
+      // try {
+      //   const name = this.petFullName.split(" ");
+      //   this.petFirstName = name.slice(0, 1).join(" ");
+      //   this.petLastName = name.slice(1, this.petFirstName.length).join(" ");
+      //   var formData = new FormData();
+      //   var imagePetFile = document.querySelector("#file-input");
+      //   formData.append("profilePicture", imagePetFile.files[0]);
+      //   formData.append("firstName", this.petFirstName);
+      //   formData.append("lastName", this.petLastName);
+      //   formData.append("color", this.petColor);
+      //   formData.append("male", this.petMale);
+      //   formData.append("type", this.petType);
+      //   formData.append("state", this.petState);
+      //   formData.append("coatSize", this.petCoatSize);
+      //   formData.append("birthdate", this.petBirthdate);
+
+      //   api
+      //     .post("/createpet", formData, {
+      //       headers: {
+      //         "Content-Type": "image/*",
+      //         token: this.loginInfo._id,
+      //       },
+      //     })
+      //     .then((response) => {
+      //       if (response.status == 200) {
+      //         alert("Pet adicionado com sucesso");
+      //       } else {
+      //         alert("Erro ao adicionar o pet");
+      //       }
+      //     });
+      // } catch (error) {
+      //   console.log(error);
+      //   alert(error);
+      // }
     },
   },
 };
@@ -205,18 +209,43 @@ export default {
 #file-input {
   display: none;
 }
+.petButtonsContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
 .lblImagePetPicker {
   display: flex;
-  width: 90%;
-  height: 3rem;
+  width: fit-content;
+  max-width: 40%;
+  min-height: 3rem;
+  height: fit-content;
+  padding: 10px;
+  place-items: center;
+  justify-content: center;
+  align-self: center;
+  color: rgb(86, 125, 255);
+  border-radius: 1rem;
+  border: 2px solid rgb(86, 125, 255);
+  cursor: pointer;
+}
+.btnCreatePet {
+  display: flex;
+  width: fit-content;
+  max-width: 40%;
+  height: fit-content;
+  min-height: 3rem;
+  padding: 10px;
+  margin: 10px;
   place-items: center;
   justify-content: center;
   align-self: center;
   color: white;
   border-radius: 1rem;
-  background-color: rgb(86, 125, 255);
-  border: 1px solid #292929;
-  box-shadow: 0 4px 4px 0 rgb(86, 125, 255, 0.3);
+  background-color: rgb(0, 197, 0);
+  border: 1px solid rgb(241, 241, 241);
+  box-shadow: 0 4px 4px 0 rgb(100, 255, 86);
+  cursor: pointer;
 }
 .imageName {
   font-family: "Delius";
@@ -254,18 +283,15 @@ export default {
 .modalAlert {
   display: flex;
   flex-direction: column;
-  text-align: center;
   background-color: #ff8636;
   max-width: 30%;
   min-width: 320px;
   padding: 40px;
   border: 10px double white;
-  box-shadow: 0 0 0 10px white;
   position: relative;
   border-radius: 30px;
   box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.3);
-  justify-content: center;
-  align-items: center;
+  place-items: center;
 }
 .subtitleLoading {
   word-wrap: break-word;

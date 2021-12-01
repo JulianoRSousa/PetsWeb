@@ -16,12 +16,12 @@
               v-model="petState"
             >
               <option class="firstOption" :value="1">eu perdi meu pet</option>
-              <option class="secondOption" :value="2"
-                >eu encontrei um pet</option
-              >
-              <option class="thirdOption" :value="3"
-                >tenho um pet para adoção</option
-              >
+              <option class="secondOption" :value="2">
+                eu encontrei um pet
+              </option>
+              <option class="thirdOption" :value="3">
+                tenho um pet para adoção
+              </option>
             </select>
             <label v-if="stepController == 1" for="petSelector">
               Escolha um de seus pets: step 1
@@ -29,16 +29,15 @@
                 class="petSelector"
                 id="petListSelector"
                 v-model="petSelector"
-              >
-              </select>
+              ></select>
             </label>
 
             <create-pet
-            :loading="loading"
               v-if="stepController == 2"
               :petState="petState"
               :stepController="stepController"
-              :thisStep="3"
+              :success="successNewPet"
+              :failed="failedNewPet"
             />
           </div>
         </div>
@@ -86,7 +85,9 @@
         >
           Anterior
         </button>
-        <button class="stepButton" @click="nextStep">Proximo</button>
+        <button v-if="stepController != 2" class="stepButton" @click="nextStep">
+          Proximo
+        </button>
         <button
           v-if="stepController == 5"
           class="stepButton"
@@ -102,20 +103,21 @@
 <script>
 import PetsLocalStorage from "../controller/PetsLocalStorage";
 import api from "../services/api";
-import CreatePet from './CreatePet.vue';
+import CreatePet from "./CreatePet.vue";
 
 export default {
   components: {
     CreatePet,
   },
   name: "CreatePost",
-  created: function() {
+  created: function () {
     this.userInfo = PetsLocalStorage.getItem("loginInfo").user;
     this.loginInfo = PetsLocalStorage.getItem("loginInfo");
     this.petList = PetsLocalStorage.getItem("loginInfo").user.petList;
   },
   data() {
     return {
+      newPet: false,
       loading: false,
       stepController: 0,
       petState: 1,
@@ -128,34 +130,38 @@ export default {
       petList: [],
       imageData: {},
       item: {
-        //...
         image: null,
         imageUrl: null,
       },
     };
   },
   methods: {
-    toogleloading: function(){
-      this.loading = !this.loading
+    successNewPet: function () {
+      this.stepController = 3;
     },
-    nextStep: function() {
+    failedNewPet: function () {
+      this.stepController = 0;
+    },
+    nextStep: function () {
       if (this.stepController == 0 && this.petState == 2) {
+        this.loading = false;
         this.stepController = 2;
         return;
       }
-      if(this.stepController == 2){
-        this.toogleloading()
+      if (this.stepController == 2) {
+        this.loading = false;
       }
       this.stepController++;
     },
-    previousStep: function() {
+    previousStep: function () {
       if (this.stepController == 2 && this.petState == 2) {
+        this.loading = false;
         this.stepController = 0;
         return;
       }
       this.stepController--;
     },
-    execFunc: function() {
+    execFunc: function () {
       this.imageData = document.querySelector("#imagePicker");
       document
         .querySelector("#list")
@@ -163,12 +169,12 @@ export default {
           <img src="e.target.result" title="theFile.name" width="50" />
         );
     },
-    chooseStyle: function() {
+    chooseStyle: function () {
       const selector = document.querySelector("#petState");
       selector.classList.replace("secondOption", "firstOption");
     },
 
-    handleImageSelect: function(e) {
+    handleImageSelect: function (e) {
       const file = e.target.files[0];
 
       const reader = new FileReader();
@@ -178,7 +184,7 @@ export default {
         console.log(this.imageData);
       };
     },
-    createNewPost: function() {
+    createNewPost: function () {
       var formData = new FormData();
       var imagefile = document.querySelector("#file-input");
       formData.append("picture", imagefile.files[0]);
