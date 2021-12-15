@@ -1,10 +1,6 @@
 <template>
-  <body class="grid">
-    <div
-      class="postContainer is-one-third"
-      v-for="(post, index) in data"
-      :key="index"
-    >
+  <body>
+    <div class="postContainer is-one-third">
       <header id="headerUserInfo">
         <img :src="post.user.picture_url" alt="User image" class="userImage" />
         <div class="userInfo">
@@ -33,7 +29,7 @@
             alt="Pet image"
             :src="post.pet.picture_url"
           />
-          <span class="mainInternalDate">{{ post.postDate }}</span>
+          <span class="mainInternalDate">{{ postDate }}</span>
         </div>
         <div class="mainInternalDiv">
           <span class="petName"
@@ -49,7 +45,7 @@
           >
             <span class="infoStateText">perdido</span>
           </div>
-          <div v-else class="infoStateContainer">
+          <div v-else class="infoStateContainer colorStateGreen">
             <span class="infoStateText">adoção</span>
           </div>
         </div>
@@ -59,43 +55,39 @@
 </template>
 
 <script>
-import api from "../services/api";
+import dateFormat, { masks} from "dateformat";
 export default {
-  created: function() {
-    this.getOn();
-  },
   data() {
-    return {
-      data: [],
-      colorState: "blue",
-    };
+    return {};
   },
-  methods: {
-    getOn: function() {
-      api.get("/getmainfeed").then((res) => {
-        this.data = res.data;
-      });
+  computed: {
+    postDate: function () {
+
+      masks.PostFormatTime = 'dd"/"m"/"yyyy';
+      let agora = Date.now();
+      if(this.post.postedAt != agora){
+        console.log('postedAt: ',this.post.postedAt)
+        console.log('agora: ',agora)
+         return dateFormat(agora, "PostFormatTime")
+      }
+      return null
+
     },
+  },
+  props: {
+    post: {},
   },
 };
 </script>
 
 <style>
-.grid {
-  display: grid;
-  text-align: start;
-  grid-template-columns: repeat(auto-fill, minmax(24rem, 1fr));
-  grid-gap: 30px;
-  background: #f8b172;
-  padding-top: 2rem;
-}
 .postContainer {
   position: relative;
   display: flex;
   flex-direction: column;
   background-color: white;
   box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
-  border-radius: 1.8rem 0px;
+  border-radius: 2rem 0px;
   min-height: 17rem;
   min-width: 24rem;
   height: 17rem;
@@ -114,8 +106,6 @@ export default {
 }
 .userImage {
   width: 3.5rem;
-  border-radius: 50% 0%;
-  opacity: 80%;
 }
 .userInfo {
   display: flex;
@@ -146,7 +136,6 @@ export default {
   flex: 1;
   flex-direction: column;
   overflow: hidden;
-  
 }
 .mainInternalImage {
   flex: 1;
@@ -188,6 +177,9 @@ export default {
 }
 .colorStateRed {
   background-color: rgb(196, 49, 49);
+}
+.colorStateGreen {
+  background-color: rgb(44, 151, 34);
 }
 .infoStateText {
   color: white;

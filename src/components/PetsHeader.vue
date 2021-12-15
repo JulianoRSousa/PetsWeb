@@ -1,12 +1,8 @@
 <template>
   <body>
     <header class="headerApp">
-      <router-link v-if="logged" class="appName" to="/feed">
-        pets
-      </router-link>
-      <router-link v-else class="appName" to="/">
-        pets
-      </router-link>
+      <router-link v-if="logged" class="appName" to="/feed"> pets </router-link>
+      <router-link v-else class="appName" to="/"> pets </router-link>
       <span v-if="showTitle" class="pageTitle">{{ title }}</span>
       <dropdown :title="title" />
     </header>

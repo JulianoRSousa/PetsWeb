@@ -9,7 +9,7 @@
           Bem vindo, {{ this.user.firstName | capitalize }}
         </h2>
         <div>
-          <post-item />
+          <post-list/>
           <button class="pets-float-button" @click="newPostFunc">
             Novo post
             <svg
@@ -45,14 +45,14 @@
 </template>
 
 <script>
-import PostItem from "../components/PostItem.vue";
 import PetsLocalStorage from "../controller/PetsLocalStorage";
 import Modal from "../components/Modal.vue";
 import PetsHeader from '../components/PetsHeader.vue';
+import PostList from '../components/PostList.vue';
 
 export default {
   components: {
-    PostItem,
+    PostList,
     Modal,
     PetsHeader,
   },

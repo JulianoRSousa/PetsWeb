@@ -231,12 +231,6 @@ export default {
   flex-direction: row;
   align-items: flex-start;
 }
-.userImage {
-  display: flex;
-  border-radius: 50%;
-  height: 4rem;
-  width: 4rem;
-}
 .internHeaderContainer {
   display: grid;
   flex-direction: column;
