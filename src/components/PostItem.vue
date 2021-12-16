@@ -27,7 +27,7 @@
           <img
             class="mainInternalImage"
             alt="Pet image"
-            :src="post.pet.picture_url"
+            :src="post.picture_url"
           />
           <span class="mainInternalDate">{{ postDate }}</span>
         </div>
@@ -55,23 +55,19 @@
 </template>
 
 <script>
-import dateFormat, { masks} from "dateformat";
+import dateFormat, { masks } from "dateformat";
 export default {
   data() {
     return {};
   },
   computed: {
     postDate: function () {
-
       masks.PostFormatTime = 'dd"/"m"/"yyyy';
-      let agora = Date.now();
-      if(this.post.postedAt != agora){
-        console.log('postedAt: ',this.post.postedAt)
-        console.log('agora: ',agora)
-         return dateFormat(agora, "PostFormatTime")
+      masks.PostFormatDay = "DDDD";
+      if (Date.parse(this.post.postedAt) > Date.now() - 24 * 60 * 60 * 1000) {
+        return dateFormat(this.post.postedAt, "PostFormatDay");
       }
-      return null
-
+      return dateFormat(this.post.postedAt, "PostFormatTime");
     },
   },
   props: {
