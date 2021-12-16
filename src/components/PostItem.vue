@@ -1,26 +1,13 @@
 <template>
   <body>
-    <div class="postContainer is-one-third">
+    <div class="postContainer is-one-third" @click="showPost(post)">
       <header id="headerUserInfo">
         <img :src="post.user.picture_url" alt="User image" class="userImage" />
         <div class="userInfo">
           <span>{{ post.user.firstName }} {{ post.user.lastName }}</span>
           <span class="username">@{{ post.user.username }}</span>
         </div>
-        <div class="optionIcon">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-            aria-hidden="true"
-            role="img"
-            width="1em"
-            height="1em"
-            preserveAspectRatio="xMidYMid meet"
-            viewBox="0 0 24 24"
-          >
-            <path d="M10 10h4v4h-4zm6 0h4v4h-4zM4 10h4v4H4z" fill="#292929" />
-          </svg>
-        </div>
+        
       </header>
       <main class="mainContent">
         <div class="mainInternalDiv">
@@ -58,9 +45,14 @@
 import dateFormat, { masks } from "dateformat";
 export default {
   data() {
-    return {};
+    return {
+      showPost: function(post){
+        console.log('Post clicked = ',post._id)
+      },
+    };
   },
   computed: {
+    
     postDate: function () {
       masks.PostFormatTime = 'dd"/"m"/"yyyy';
       masks.PostFormatDay = "DDDD";
@@ -93,6 +85,7 @@ export default {
   font-family: "Delius", sans-serif;
   font-size: 1.2rem;
   color: #333333;
+  cursor: pointer;
 }
 #headerUserInfo {
   display: flex;
