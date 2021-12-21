@@ -128,8 +128,8 @@ export default {
 }
 .formTitle {
   font-size: 1.5rem;
-  color: white;
   text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   margin-bottom: 2rem;
+  color: white;
 }
 </style>
