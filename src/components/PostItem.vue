@@ -47,7 +47,7 @@ export default {
   data() {
     return {
       showPost: function(post){
-        console.log('Post clicked = ',post._id)
+        console.log('Post clicked = ',post)
       },
     };
   },

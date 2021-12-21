@@ -7,7 +7,7 @@
         <div>
           <div class="headerInfo">
             <label v-if="stepController == 0" for="selectorState"
-              >Qual a situação? step 0
+              >Qual a situação?
             </label>
             <select
               v-if="stepController == 0"
@@ -23,13 +23,16 @@
                 tenho um pet para adoção
               </option>
             </select>
-            <label v-if="stepController == 1" for="petSelector">
-              Escolha um de seus pets: step 1
-              <select
-                class="petSelector"
-                id="petListSelector"
-                v-model="petSelector"
-              ></select>
+            <label v-show="stepController == 1" for="petSelector">
+              Escolha um de seus pets:
+              <div id="ContainerPetSelector">
+                <select
+                v-model="selectedPet"
+                  @click="dropdownList"
+                  class="selectorState"
+                  id="PetSelector"
+                ></select>
+              </div>
             </label>
 
             <create-pet
@@ -118,12 +121,14 @@ export default {
   data() {
     return {
       newPet: false,
+      selectedPet: null,
+      pet_id: null,
       loading: false,
       stepController: 0,
       petState: 1,
       petSelector: 0,
       showAddPetName: false,
-      petName: "Brutus",
+      petName: "",
       postDescription: "",
       userInfo: {},
       loginInfo: {},
@@ -136,8 +141,30 @@ export default {
     };
   },
   methods: {
+    dropdownList: function () {
+      var values = [];
+      values = this.userInfo.petList;
+      var PetSelectorComponent = document.createElement("select");
+      PetSelectorComponent.setAttribute("class", "selectorState");
+      PetSelectorComponent.setAttribute("v-model", this.selectedPet);
+      PetSelectorComponent.id = "PetSelector";
+      var lastOption = document.createElement("option");
+      lastOption.value = null;
+      lastOption.text = "Adicionar um novo pet";
+      document.getElementById("PetSelector").innerHTML = "";
+
+      for (const val of values) {
+        var option = document.createElement("option");
+        option.value = val;
+        option.text = val.firstName + " " + val.lastName;
+        PetSelectorComponent.appendChild(option);
+      }
+      PetSelectorComponent.appendChild(lastOption);
+      document.getElementById("PetSelector").replaceWith(PetSelectorComponent);
+    },
     successNewPet: function () {
-      this.stepController = 3;
+      this.stepController = 4;
+      console.log("successNewPet");
     },
     failedNewPet: function () {
       this.stepController = 0;
@@ -161,29 +188,23 @@ export default {
       }
       this.stepController--;
     },
-    execFunc: function () {
-      this.imageData = document.querySelector("#imagePicker");
-      document
-        .querySelector("#list")
-        .innerHTML(
-          <img src="e.target.result" title="theFile.name" width="50" />
-        );
-    },
+
     chooseStyle: function () {
       const selector = document.querySelector("#petState");
       selector.classList.replace("secondOption", "firstOption");
     },
 
-    handleImageSelect: function (e) {
-      const file = e.target.files[0];
+    // handleImageSelect: function (e) {
+    //   const file = e.target.files[0];
 
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = (e) => {
-        this.imageData = e.target.result;
-        console.log(this.imageData);
-      };
-    },
+    //   const reader = new FileReader();
+    //   reader.readAsDataURL(file);
+    //   reader.onload = (e) => {
+    //     this.imageData = e.target.result;
+    //     console.log(this.imageData);
+    //   };
+    // },
+
     createNewPost: function () {
       var formData = new FormData();
       var imagefile = document.querySelector("#file-input");
@@ -194,7 +215,7 @@ export default {
         .post("/createPost", formData, {
           headers: {
             "Content-Type": "image/*",
-            pet_id: "61a4cbde2050290018f4c768",
+            pet_id: this.pet._id,
             token: this.loginInfo._id,
           },
         })
@@ -243,6 +264,7 @@ export default {
   border: 1px solid #292929;
   padding: 3px;
   font-family: "Delius";
+  min-width: 8rem;
 }
 .firstOption {
   color: red;

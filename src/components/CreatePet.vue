@@ -1,18 +1,8 @@
 <template>
   <body>
-    <form v-if="loadingStatus == 'none'" class="containerAddPet">
-      <label v-if="!editPetName" class="lblPetName" for="petName">
-        Nome do pet:
-        <input
-          id="petName"
-          class="petNameInput"
-          placeholder="ex: Brutus"
-          type="text"
-          v-model="petFullName"
-        />
-      </label>
+    <form v-if="loadingStatus == 'non-loading'" class="containerAddPet">
       <label class="showPetNameInput" for="checkPetName">
-        Eu não sei o nome desse pet:
+        Eu sei o nome desse pet:
         <input
           id="checkPetName"
           class="showPetNameInput"
@@ -21,12 +11,24 @@
           @change="resetPetName"
         />
       </label>
+      <label v-if="editPetName" class="lblPetName" for="petName">
+        Nome do pet:
+        <input
+          id="petName"
+          class="petNameInput"
+          placeholder="ex: Brutus"
+          type="text"
+          v-model="petFullName"
+          minlength="2"
+        />
+      </label>
+
       <label for="petType" class="petType">
         Este pet é um:
         <select class="petTypeSelector" id="petType" v-model="petType">
           <option value="DOG">Cachorro</option>
           <option value="CAT">Gato</option>
-          <option value="NONE">Outro</option>
+          <option value="OTHER">Outro</option>
         </select>
       </label>
       <div class="petSexSelector">
@@ -53,16 +55,11 @@
       <div class="petButtonsContainer">
         <label class="lblImagePetPicker" for="file-input">
           Adicionar uma foto do pet
-          <input
-            @change="imageName"
-            type="file"
-            accept="image/*"
-            id="file-input"
-          />
+          <input type="file" accept="image/*" id="PetImageInput" />
         </label>
         <div @click="createNewPet" class="btnCreatePet">Adicionar Pet</div>
       </div>
-      <span v-if="selectedImage">{{ selectedImage }}</span>
+      <!-- <span v-if="selectedImage">{{ selectedImage }}</span> -->
     </form>
     <div v-else class="modal-containerAlert">
       <div v-if="loadingStatus == 'loading'" class="modalAlert">
@@ -84,7 +81,7 @@
 </template>
 
 <script>
-// import api from "../services/api";
+import api from "../services/api";
 import PetsLocalStorage from "../controller/PetsLocalStorage";
 
 export default {
@@ -93,21 +90,26 @@ export default {
   created: function () {
     this.loginInfo = PetsLocalStorage.getItem("loginInfo");
   },
+  watch: {
+    petFullName: function () {
+      const PetName = this.petFullName.split(" ");
+      this.petFirstName = PetName.slice(0, 1).join(" ");
+      this.petLastName = PetName.slice(1, this.petFirstName.length).join(" ");
+    },
+  },
   data() {
     return {
       petSelector: 0,
       editPetName: false,
+      petFullName: "",
       petFirstName: "",
       petLastName: "",
-      petFullName: "",
       loginInfo: {},
-      petColor: {},
       petMale: true,
       petType: "DOG",
       petCoatSize: "NONE",
-      petBirthdate: "NONE",
-      selectedImage: "",
-      loadingStatus: "loading",
+      petBirthdate: Date.now(),
+      loadingStatus: "non-loading",
     };
   },
   props: {
@@ -117,53 +119,103 @@ export default {
     success: Function,
   },
   methods: {
-    imageName: function () {
-      var image = document.querySelector("#file-input");
-      this.selectedImage = image.files[0].name;
-    },
     resetPetName: function () {
       this.petFullName = "";
     },
-    createNewPet: function () {
-     console.log('create')
-     this.showModal = true;
-     console.log('created')
-
-      // try {
-      //   const name = this.petFullName.split(" ");
-      //   this.petFirstName = name.slice(0, 1).join(" ");
-      //   this.petLastName = name.slice(1, this.petFirstName.length).join(" ");
-      //   var formData = new FormData();
-      //   var imagePetFile = document.querySelector("#file-input");
-      //   formData.append("profilePicture", imagePetFile.files[0]);
-      //   formData.append("firstName", this.petFirstName);
-      //   formData.append("lastName", this.petLastName);
-      //   formData.append("color", this.petColor);
-      //   formData.append("male", this.petMale);
-      //   formData.append("type", this.petType);
-      //   formData.append("state", this.petState);
-      //   formData.append("coatSize", this.petCoatSize);
-      //   formData.append("birthdate", this.petBirthdate);
-
-      //   api
-      //     .post("/createpet", formData, {
-      //       headers: {
-      //         "Content-Type": "image/*",
-      //         token: this.loginInfo._id,
-      //       },
-      //     })
-      //     .then((response) => {
-      //       if (response.status == 200) {
-      //         alert("Pet adicionado com sucesso");
-      //       } else {
-      //         alert("Erro ao adicionar o pet");
-      //       }
-      //     });
-      // } catch (error) {
-      //   console.log(error);
-      //   alert(error);
-      // }
+    updateLocalData: function () {
+      console.log("Token> ", this.loginInfo._id);
+      try {
+        api
+          .get(
+            "/getdata",
+            {},
+            {
+              headers: {
+                token: String(this.loginInfo._id),
+              },
+            }
+          )
+          .then((res) => {
+            if (res.status === 201) {
+              PetsLocalStorage.setItem("loginInfo", res.data);
+            }
+          });
+      } catch (error) {
+        console.log("Error: ", error);
+      }
     },
+
+    createNewPet: function () {
+      this.loadingStatus = "loading";
+      var formData = new FormData();
+      var imagefile = document.querySelector("#PetImageInput");
+      formData.append("profilePicture", imagefile.files[0]);
+      formData.append("firstName", this.petFirstName);
+      formData.append("lastName", this.petLastName);
+      formData.append("color", "brown");
+      formData.append("coatSize", "short");
+      formData.append("birthdate", this.petBirthdate);
+      formData.append("male", this.petMale);
+      formData.append("type", this.petType);
+      api
+        .post("/createpet", formData, {
+          headers: {
+            "Content-Type": "image/*",
+            token: this.loginInfo._id,
+          },
+        })
+        .then((response) => {
+          if (response.status == 201) {
+            this.updateLocalData();
+            this.loadingStatus = "success";
+          } else {
+            this.loadingStatus = "Failed";
+            alert(response.statusText);
+          }
+          console.log("CreatePetResponse > ", response);
+        });
+    },
+
+    // createNewPet: function () {
+    //   console.log("create");
+    //   this.showModal = true;
+    //   console.log("created");
+
+    // try {
+    //   const name = this.petFullName.split(" ");
+    //   this.petFirstName = name.slice(0, 1).join(" ");
+    //   this.petLastName = name.slice(1, this.petFirstName.length).join(" ");
+    //   var formData = new FormData();
+    //   var imagePetFile = document.querySelector("#file-input");
+    //   formData.append("profilePicture", imagePetFile.files[0]);
+    //   formData.append("firstName", this.petFirstName);
+    //   formData.append("lastName", this.petLastName);
+    //   formData.append("color", this.petColor);
+    //   formData.append("male", this.petMale);
+    //   formData.append("type", this.petType);
+    //   formData.append("state", this.petState);
+    //   formData.append("coatSize", this.petCoatSize);
+    //   formData.append("birthdate", this.petBirthdate);
+
+    //   api
+    //     .post("/createpet", formData, {
+    //       headers: {
+    //         "Content-Type": "image/*",
+    //         token: this.loginInfo._id,
+    //       },
+    //     })
+    //     .then((response) => {
+    //       if (response.status == 200) {
+    //         alert("Pet adicionado com sucesso");
+    //       } else {
+    //         alert("Erro ao adicionar o pet");
+    //       }
+    //     });
+    // } catch (error) {
+    //   console.log(error);
+    //   alert(error);
+    // }
+    // },
   },
 };
 </script>
