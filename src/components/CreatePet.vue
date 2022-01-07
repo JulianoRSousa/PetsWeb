@@ -1,15 +1,134 @@
 <template>
   <body>
     <form v-if="loadingStatus == 'non-loading'" class="containerAddPet">
+      <div class="containerInfoPet">
+        <div id="petTypeContainer">
+          <div style="display: flex; width: max-content">
+            <label for="petType" class="petType">
+              Este pet é um?
+              <select class="petTypeSelector" id="petType" v-model="petType">
+                <option value="DOG">Cachorro</option>
+                <option value="CAT">Gato</option>
+                <option value="OTHER">Outro</option>
+              </select>
+            </label>
+          </div>
+          <div style="width: max-content">
+            <label class="petSex" for="petSexMaleTrue">
+              macho
+              <input
+                id="petSexMaleTrue"
+                :value="true"
+                v-model="petMale"
+                type="radio"
+              />
+            </label>
+            <label class="petSex" for="petSexMaleFalse">
+              fêmea
+              <input
+                id="petSexMaleFalse"
+                :value="false"
+                v-model="petMale"
+                type="radio"
+              />
+            </label>
+          </div>
+        </div>
+
+        <div id="petNameContainer">
+          <label class="showPetNameInput" for="checkPetName">
+            Eu sei o nome desse pet?
+            <p></p>
+            <div id="petNameContainerIntern">
+              <label class="petSex" for="petSexMaleTrue">
+                sim
+                <input
+                  id="petSexMaleTrue"
+                  :value="true"
+                  v-model="editPetName"
+                  type="radio"
+                  @change="resetPetName"
+                />
+              </label>
+              <label class="petSex" for="petSexMaleFalse">
+                não
+                <input
+                  id="petSexMaleFalse"
+                  :value="false"
+                  v-model="editPetName"
+                  type="radio"
+                  @change="resetPetName"
+                />
+              </label>
+            </div>
+          </label>
+        </div>
+      </div>
+      <div id="petNameContainerBottom">
+        <label v-if="editPetName" class="lblPetName" for="petName">
+          Nome do pet:
+          <input
+            id="petName"
+            class="petNameInput"
+            placeholder="ex: Brutus"
+            type="text"
+            v-model="petFullName"
+            minlength="2"
+          />
+        </label>
+      </div>
+      <div style="display:flex; place-items: center; width: max-content;">
+        <label for="file-input"> Adicionar uma foto do pet: </label>
+        <label for="PetImageInput" class="lblImagePetPicker">
+          Escolher foto
+          <input
+            v-show="false"
+            type="file"
+            accept="image/*"
+            id="PetImageInput"
+          />
+        </label>
+      </div>
+      <div @click="createNewPet" class="petButtonsContainer" id="btnCreatePet">
+        Adicionar Pet
+      </div>
+    </form>
+
+    <!-- <form
+      v-show="false"
+      v-if="loadingStatus == 'non-loading'"
+      class="containerAddPet"
+    >
+      <label for="petType" class="petType">
+        Este pet é um:
+        <select class="petTypeSelector" id="petType" v-model="petType">
+          <option value="DOG">Cachorro</option>
+          <option value="CAT">Gato</option>
+          <option value="OTHER">Outro</option>
+        </select>
+      </label>
       <label class="showPetNameInput" for="checkPetName">
         Eu sei o nome desse pet:
-        <input
-          id="checkPetName"
-          class="showPetNameInput"
-          type="checkbox"
-          v-model="editPetName"
-          @change="resetPetName"
-        />
+        <label class="petSex" for="petSexMaleTrue">
+          sim
+          <input
+            id="petSexMaleTrue"
+            :value="true"
+            v-model="editPetName"
+            type="radio"
+            @change="resetPetName"
+          />
+        </label>
+        <label class="petSex" for="petSexMaleFalse">
+          não
+          <input
+            id="petSexMaleFalse"
+            :value="false"
+            v-model="editPetName"
+            type="radio"
+            @change="resetPetName"
+          />
+        </label>
       </label>
       <label v-if="editPetName" class="lblPetName" for="petName">
         Nome do pet:
@@ -21,15 +140,6 @@
           v-model="petFullName"
           minlength="2"
         />
-      </label>
-
-      <label for="petType" class="petType">
-        Este pet é um:
-        <select class="petTypeSelector" id="petType" v-model="petType">
-          <option value="DOG">Cachorro</option>
-          <option value="CAT">Gato</option>
-          <option value="OTHER">Outro</option>
-        </select>
       </label>
       <div class="petSexSelector">
         Esse pet é:
@@ -57,10 +167,12 @@
           Adicionar uma foto do pet
           <input type="file" accept="image/*" id="PetImageInput" />
         </label>
-        <div @click="createNewPet" class="btnCreatePet">Adicionar Pet</div>
       </div>
-      <!-- <span v-if="selectedImage">{{ selectedImage }}</span> -->
-    </form>
+      <div @click="createNewPet" class="petButtonsContainer" id="btnCreatePet">
+        Adicionar Pet
+      </div>
+
+    </form> -->
     <div v-else class="modal-containerAlert">
       <div v-if="loadingStatus == 'loading'" class="modalAlert">
         <h3 class="subtitleLoading">Adicionando pet . . .</h3>
@@ -152,8 +264,8 @@ export default {
       formData.append("profilePicture", imagefile.files[0]);
       formData.append("firstName", this.petFirstName);
       formData.append("lastName", this.petLastName);
-      formData.append("color", "brown");
-      formData.append("coatSize", "short");
+      formData.append("color", this.petColor || "brown");
+      formData.append("coatSize", this.petCoatSize || "short");
       formData.append("birthdate", this.petBirthdate);
       formData.append("male", this.petMale);
       formData.append("type", this.petType);
@@ -224,10 +336,55 @@ export default {
 .containerAddPet {
   display: flex;
   flex-direction: column;
-  place-items: flex-start;
-  text-align: flex-start;
+  place-items: center;
+  text-align: center;
   background-color: white;
+}
+.containerInfoPet {
+  display: flex;
+  align-self: center;
+  border-style: solid;
+  padding-top: 10px;
+  border-width: 0px 0px 0px 0px;
+  border-color: #29292950;
+}
+#petTypeContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: 10px;
+}
+#petNameContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: 10px;
+  border-style: solid;
+  border-width: 0px 0px 0px 1px;
+  border-color: #29292950;
+}
+#petNameContainerIntern {
   width: max-content;
+}
+#petNameContainerBottom {
+  width: 90%;
+  place-items: center;
+  padding-inline: 10px;
+  margin: 10px;
+  border-style: solid;
+  border-width: 1px 0px 1px 0px;
+  border-color: #29292950;
+}
+#petSexContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 10px;
+}
+#petImageContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 .lblPetName {
   margin-bottom: 1rem;
@@ -263,32 +420,28 @@ export default {
 }
 .petButtonsContainer {
   display: flex;
-  flex-direction: row;
   justify-content: center;
 }
 .lblImagePetPicker {
   display: flex;
+  flex-direction: column;
   width: fit-content;
   max-width: 40%;
-  min-height: 3rem;
-  height: fit-content;
   padding: 10px;
+  margin-left: 10px;
   place-items: center;
-  justify-content: center;
-  align-self: center;
   color: rgb(86, 125, 255);
   border-radius: 1rem;
   border: 2px solid rgb(86, 125, 255);
   cursor: pointer;
 }
-.btnCreatePet {
-  display: flex;
+#btnCreatePet {
   width: fit-content;
   max-width: 40%;
   height: fit-content;
   min-height: 3rem;
   padding: 10px;
-  margin: 10px;
+  margin-top: 1rem;
   place-items: center;
   justify-content: center;
   align-self: center;
