@@ -6,7 +6,7 @@
     <main class="mainPage">
       <h2>Exemplos de feed (sem ordenação personalizada )</h2>
       <div>
-        <post-item />
+        <post-list />
       </div>
       <button class="pets-float-button" @click="showModalFunc">
         Novo post
@@ -40,13 +40,13 @@
 <script>
 import Modal from "../components/Modal.vue";
 import PetsLocalStorage from "../controller/PetsLocalStorage";
-import PostItem from "../components/PostItem.vue";
 import PetsHeader from '../components/PetsHeader.vue';
+import PostList from '../components/PostList.vue';
 export default {
   components: {
-    PostItem,
     Modal,
     PetsHeader,
+    PostList,
   },
   name: "Home",
   mounted() {

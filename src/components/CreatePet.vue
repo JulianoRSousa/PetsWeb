@@ -77,8 +77,8 @@
           />
         </label>
       </div>
-      <div style="display:flex; place-items: center; width: max-content;">
-        <label for="file-input"> Adicionar uma foto do pet: </label>
+      <div style="display: flex; place-items: center; width: max-content">
+        <label for="PetImageInput"> Adicionar uma foto do pet: </label>
         <label for="PetImageInput" class="lblImagePetPicker">
           Escolher foto
           <input
@@ -94,85 +94,6 @@
       </div>
     </form>
 
-    <!-- <form
-      v-show="false"
-      v-if="loadingStatus == 'non-loading'"
-      class="containerAddPet"
-    >
-      <label for="petType" class="petType">
-        Este pet é um:
-        <select class="petTypeSelector" id="petType" v-model="petType">
-          <option value="DOG">Cachorro</option>
-          <option value="CAT">Gato</option>
-          <option value="OTHER">Outro</option>
-        </select>
-      </label>
-      <label class="showPetNameInput" for="checkPetName">
-        Eu sei o nome desse pet:
-        <label class="petSex" for="petSexMaleTrue">
-          sim
-          <input
-            id="petSexMaleTrue"
-            :value="true"
-            v-model="editPetName"
-            type="radio"
-            @change="resetPetName"
-          />
-        </label>
-        <label class="petSex" for="petSexMaleFalse">
-          não
-          <input
-            id="petSexMaleFalse"
-            :value="false"
-            v-model="editPetName"
-            type="radio"
-            @change="resetPetName"
-          />
-        </label>
-      </label>
-      <label v-if="editPetName" class="lblPetName" for="petName">
-        Nome do pet:
-        <input
-          id="petName"
-          class="petNameInput"
-          placeholder="ex: Brutus"
-          type="text"
-          v-model="petFullName"
-          minlength="2"
-        />
-      </label>
-      <div class="petSexSelector">
-        Esse pet é:
-        <label class="petSex" for="petSexMaleTrue">
-          macho
-          <input
-            id="petSexMaleTrue"
-            :value="true"
-            v-model="petMale"
-            type="radio"
-          />
-        </label>
-        <label class="petSex" for="petSexMaleFalse">
-          fêmea
-          <input
-            id="petSexMaleFalse"
-            :value="false"
-            v-model="petMale"
-            type="radio"
-          />
-        </label>
-      </div>
-      <div class="petButtonsContainer">
-        <label class="lblImagePetPicker" for="file-input">
-          Adicionar uma foto do pet
-          <input type="file" accept="image/*" id="PetImageInput" />
-        </label>
-      </div>
-      <div @click="createNewPet" class="petButtonsContainer" id="btnCreatePet">
-        Adicionar Pet
-      </div>
-
-    </form> -->
     <div v-else class="modal-containerAlert">
       <div v-if="loadingStatus == 'loading'" class="modalAlert">
         <h3 class="subtitleLoading">Adicionando pet . . .</h3>
@@ -222,6 +143,7 @@ export default {
       petCoatSize: "NONE",
       petBirthdate: Date.now(),
       loadingStatus: "non-loading",
+      petResponseData: null,
     };
   },
   props: {
@@ -235,26 +157,20 @@ export default {
       this.petFullName = "";
     },
     updateLocalData: function () {
-      console.log("Token> ", this.loginInfo._id);
-      try {
-        api
-          .get(
-            "/getdata",
-            {},
-            {
-              headers: {
-                token: String(this.loginInfo._id),
-              },
-            }
-          )
-          .then((res) => {
-            if (res.status === 201) {
-              PetsLocalStorage.setItem("loginInfo", res.data);
-            }
-          });
-      } catch (error) {
-        console.log("Error: ", error);
-      }
+      api
+        .get("/getdata", {
+          headers: {
+            token: String(this.loginInfo._id),
+          },
+        })
+        .then((res) => {
+          if (res.status === 201) {
+            PetsLocalStorage.setItem("loginInfo", res.data);
+          }
+        })
+        .catch((error) => {
+          console.log("Error: ", error);
+        });
     },
 
     createNewPet: function () {
@@ -269,6 +185,7 @@ export default {
       formData.append("birthdate", this.petBirthdate);
       formData.append("male", this.petMale);
       formData.append("type", this.petType);
+
       api
         .post("/createpet", formData, {
           headers: {
@@ -278,56 +195,21 @@ export default {
         })
         .then((response) => {
           if (response.status == 201) {
+            this.petResponseData = response.data;
             this.updateLocalData();
+            this.$emit("petCreated", this.petResponseData);
             this.loadingStatus = "success";
           } else {
-            this.loadingStatus = "Failed";
+            this.loadingStatus = "failed";
             alert(response.statusText);
           }
-          console.log("CreatePetResponse > ", response);
+        })
+        .catch((response) => {
+          this.loadingStatus = "failed";
+          alert(response);
+          console.log(response);
         });
     },
-
-    // createNewPet: function () {
-    //   console.log("create");
-    //   this.showModal = true;
-    //   console.log("created");
-
-    // try {
-    //   const name = this.petFullName.split(" ");
-    //   this.petFirstName = name.slice(0, 1).join(" ");
-    //   this.petLastName = name.slice(1, this.petFirstName.length).join(" ");
-    //   var formData = new FormData();
-    //   var imagePetFile = document.querySelector("#file-input");
-    //   formData.append("profilePicture", imagePetFile.files[0]);
-    //   formData.append("firstName", this.petFirstName);
-    //   formData.append("lastName", this.petLastName);
-    //   formData.append("color", this.petColor);
-    //   formData.append("male", this.petMale);
-    //   formData.append("type", this.petType);
-    //   formData.append("state", this.petState);
-    //   formData.append("coatSize", this.petCoatSize);
-    //   formData.append("birthdate", this.petBirthdate);
-
-    //   api
-    //     .post("/createpet", formData, {
-    //       headers: {
-    //         "Content-Type": "image/*",
-    //         token: this.loginInfo._id,
-    //       },
-    //     })
-    //     .then((response) => {
-    //       if (response.status == 200) {
-    //         alert("Pet adicionado com sucesso");
-    //       } else {
-    //         alert("Erro ao adicionar o pet");
-    //       }
-    //     });
-    // } catch (error) {
-    //   console.log(error);
-    //   alert(error);
-    // }
-    // },
   },
 };
 </script>

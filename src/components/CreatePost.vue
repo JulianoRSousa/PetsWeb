@@ -27,7 +27,7 @@
               Escolha um de seus pets:
               <div id="ContainerPetSelector">
                 <select
-                v-model="selectedPet"
+                  v-model="selectedPet"
                   @click="dropdownList"
                   class="selectorState"
                   id="PetSelector"
@@ -41,6 +41,7 @@
               :stepController="stepController"
               :success="successNewPet"
               :failed="failedNewPet"
+              @petCreated="setPetInfo"
             />
           </div>
         </div>
@@ -50,7 +51,7 @@
             class="lblPetName"
             for="postDescription"
           >
-            Nome do pet: {{ petName }}
+            Nome do pet: {{ petData.firstName + " " + petData.lastName }}
           </label>
 
           <label
@@ -70,14 +71,21 @@
           </label>
         </div>
         <footer>
-          <label
+          <div
             v-if="stepController == 4"
-            class="lblImagePicker"
-            for="inputImage"
+            style="display: flex; place-items: center; width: max-content"
           >
-            Adicione uma foto:
-            <input type="file" accept="image/*" id="file-input" />
-          </label>
+            <label for="PostImageInput"> Adicione uma foto ao post: </label>
+            <label for="PostImageInput" class="lblImagePetPicker">
+              Escolher foto
+              <input
+                v-show="false"
+                type="file"
+                accept="image/*"
+                id="PostImageInput"
+              />
+            </label>
+          </div>
         </footer>
       </form>
       <div>
@@ -128,7 +136,7 @@ export default {
       petState: 1,
       petSelector: 0,
       showAddPetName: false,
-      petName: "",
+      petData: null,
       postDescription: "",
       userInfo: {},
       loginInfo: {},
@@ -141,6 +149,9 @@ export default {
     };
   },
   methods: {
+    setPetInfo: function (petInfo) {
+      this.petData = petInfo;
+    },
     dropdownList: function () {
       var values = [];
       values = this.userInfo.petList;
@@ -205,9 +216,10 @@ export default {
     //   };
     // },
 
-    createNewPost: function () {
+    CreateNewPost: function () {
       var formData = new FormData();
-      var imagefile = document.querySelector("#file-input");
+      var imagefile = document.querySelector("#PostImageInput");
+      console.log('imageFile: ',imagefile)
       formData.append("picture", imagefile.files[0]);
       formData.append("description", this.postDescription);
 
@@ -215,11 +227,14 @@ export default {
         .post("/createPost", formData, {
           headers: {
             "Content-Type": "image/*",
-            pet_id: this.pet._id,
+            pet_id: this.petInfo._id,
             token: this.loginInfo._id,
           },
         })
         .then((response) => {
+          console.log("image upload response > ", response);
+        })
+        .catch((response) => {
           console.log("image upload response > ", response);
         });
     },
